@@ -1,0 +1,15 @@
+# Add all what we need for a .gitignore file
+
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+
+# Build files
+target/
+out/
+
+# Other unnecessary files
+*.log
+*.bak
+*.swp
+*.class
