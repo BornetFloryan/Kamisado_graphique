@@ -19,7 +19,7 @@ public class KamisadoBoardLook extends ClassicBoardLook {
     };
 
     public KamisadoBoardLook(int cellSize, ContainerElement element) {
-        super(cellSize, element, -1, null, null, 0, Color.BLACK, 2, Color.BLACK, true);
+        super(cellSize, element, -1, null, null, 0, Color.BLACK, 3, Color.BLACK, true);
     }
 
     @Override
@@ -33,8 +33,6 @@ public class KamisadoBoardLook extends ClassicBoardLook {
                 cells[i][j] = new Rectangle(colWidth, rowHeight, Color.valueOf(board_color[i][j]));
                 cells[i][j].setSmooth(false);
                 cells[i][j].setStroke(Color.valueOf(board_color[i][j]));
-                cells[i][j].setStrokeWidth(0);
-                cells[i][j].setStrokeMiterLimit(10);
                 cells[i][j].setStrokeType(StrokeType.INSIDE);
                 cells[i][j].setX(j * colWidth + gapXToCells);
                 cells[i][j].setY(i * rowHeight + gapYToCells);

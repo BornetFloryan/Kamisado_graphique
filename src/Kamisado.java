@@ -29,16 +29,16 @@ public class Kamisado extends Application {
 
         // add some players taking mode into account
         if (mode == 0) {
-            model.addHumanPlayer("player1");
-            model.addHumanPlayer("player2");
+            model.addHumanPlayer("Player X");
+            model.addHumanPlayer("Player O");
         }
         else if (mode == 1) {
-            model.addHumanPlayer("player");
-            model.addComputerPlayer("computer");
+            model.addHumanPlayer("Player X");
+            model.addComputerPlayer("Computer O");
         }
         else if (mode == 2) {
-            model.addComputerPlayer("computer1");
-            model.addComputerPlayer("computer2");
+            model.addComputerPlayer("Computer X");
+            model.addComputerPlayer("Computer O");
         }
 
         // register a single stage for the game, called hole

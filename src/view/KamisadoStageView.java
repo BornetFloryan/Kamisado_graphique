@@ -22,8 +22,8 @@ public class KamisadoStageView extends GameStageView {
 //        addLook(new RedPawnPotLook(320, 80, model.getRedPot()));
 
         for (int i = 0; i < 8; i++) {
-            addLook(new PawnLook(25, model.getXPawns()[i]));
             addLook(new PawnLook(25, model.getOPawns()[i]));
+            addLook(new PawnLook(25, model.getXPawns()[i]));
         }
     }
 }

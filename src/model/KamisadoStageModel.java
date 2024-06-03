@@ -40,10 +40,9 @@ public class KamisadoStageModel extends GameStageModel {
 
     public void setOPawns(Pawn[] oPawns) {
         this.OPawns = oPawns;
-    }
-
-    public Pawn[] getXPawns() {
-        return XPawns;
+        for (Pawn pawn : oPawns) {
+            addElement(pawn);
+        }
     }
 
     public Pawn[] getOPawns() {
@@ -52,6 +51,13 @@ public class KamisadoStageModel extends GameStageModel {
 
     public void setXPawns(Pawn[] xPawns) {
         this.XPawns = xPawns;
+        for (Pawn pawn : xPawns) {
+            addElement(pawn);
+        }
+    }
+
+    public Pawn[] getXPawns() {
+        return XPawns;
     }
 
     public ContainerElement getBoard() {

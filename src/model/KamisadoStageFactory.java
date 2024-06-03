@@ -17,6 +17,8 @@ public class KamisadoStageFactory extends StageElementsFactory {
 
     @Override
     public void setup() {
+
+
         TextElement text = new TextElement(stageModel.getCurrentPlayerName(), stageModel);
         text.setLocation(10,20);
         stageModel.setPlayerName(text);
@@ -31,16 +33,16 @@ public class KamisadoStageFactory extends StageElementsFactory {
         for(int i=0;i<8;i++) {
             Pawn pawn = new Pawn(i + 1, defaultXpawnsColor[i], 'X', stageModel);
             XPawns[i] = pawn;
-            board.addElement(pawn, 0, i);
+            board.addElement(pawn, 7, i);
         }
-        stageModel.setXPawns(XPawns);
+        stageModel.setOPawns(XPawns);
 
         Pawn[] OPawns = new Pawn[8];
         for(int i=0;i<8;i++) {
             Pawn pawn = new Pawn(i + 1, defaultOpawnsColor[i], 'O', stageModel);
             OPawns[i] = pawn;
-            board.addElement(pawn, 7, i);
+            board.addElement(pawn, 0, i);
         }
-        stageModel.setOPawns(OPawns);
+        stageModel.setXPawns(OPawns);
     }
 }
