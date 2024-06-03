@@ -13,8 +13,7 @@ public class KamisadoStageModel extends GameStageModel {
     private Pawn[] XPawns;
     private Pawn[] OPawns;
     private TextElement playerName;
-    // Uncomment next line if the example with a main container is used. see end of HoleStageFactory and HoleStageView
-    //private ContainerElement mainContainer;
+    private String lockedColor = null;
 
     public KamisadoStageModel(String name, Model model) {
         super(name, model);
@@ -34,8 +33,8 @@ public class KamisadoStageModel extends GameStageModel {
         playerName = text;
     }
 
-    public void setBoard(HoleBoard board) {
-        this.board = board;
+    public Pawn[] getOPawns() {
+        return OPawns;
     }
 
     public void setOPawns(Pawn[] oPawns) {
@@ -45,8 +44,8 @@ public class KamisadoStageModel extends GameStageModel {
         }
     }
 
-    public Pawn[] getOPawns() {
-        return OPawns;
+    public Pawn[] getXPawns() {
+        return XPawns;
     }
 
     public void setXPawns(Pawn[] xPawns) {
@@ -56,11 +55,19 @@ public class KamisadoStageModel extends GameStageModel {
         }
     }
 
-    public Pawn[] getXPawns() {
-        return XPawns;
+    public ContainerElement getBoard() {
+        return board;
     }
 
-    public ContainerElement getBoard() {
+    public void setBoard(HoleBoard board) {
+        this.board = board;
+    }
+
+    public String getLockedColor() {
+        return lockedColor;
+    }
+
+    public HoleBoard getHoleBoard() {
         return board;
     }
 }

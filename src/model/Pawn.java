@@ -1,5 +1,6 @@
 package model;
 
+import boardifier.model.ElementTypes;
 import boardifier.model.GameElement;
 import boardifier.model.GameStageModel;
 //import boardifier.view.ConsoleColor;
@@ -20,7 +21,8 @@ public class Pawn extends GameElement {
         this.number = number;
         this.color = color;
         this.symbol = symbol;
-
+        ElementTypes.register("pawn", 50);
+        type = ElementTypes.getType("pawn");
     }
 
     public int getNumber() {

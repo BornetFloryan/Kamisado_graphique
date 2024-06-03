@@ -13,9 +13,8 @@ public class Kamisado extends Application {
         if (args.length == 1) {
             try {
                 mode = Integer.parseInt(args[0]);
-                if ((mode <0) || (mode>2)) mode = 0;
-            }
-            catch(NumberFormatException e) {
+                if ((mode < 0) || (mode > 2)) mode = 0;
+            } catch (NumberFormatException e) {
                 mode = 0;
             }
         }
@@ -31,12 +30,10 @@ public class Kamisado extends Application {
         if (mode == 0) {
             model.addHumanPlayer("Player X");
             model.addHumanPlayer("Player O");
-        }
-        else if (mode == 1) {
+        } else if (mode == 1) {
             model.addHumanPlayer("Player X");
             model.addComputerPlayer("Computer O");
-        }
-        else if (mode == 2) {
+        } else if (mode == 2) {
             model.addComputerPlayer("Computer X");
             model.addComputerPlayer("Computer O");
         }
@@ -51,7 +48,7 @@ public class Kamisado extends Application {
         KamisadoView view = new KamisadoView(model, stage, rootPane);
 
         // create the controllers.
-        KamisadoController control = new KamisadoController(model,view);
+        KamisadoController control = new KamisadoController(model, view);
 
         // set the name of the first stage to create when the game is started
         control.setFirstStageName("kamisado");

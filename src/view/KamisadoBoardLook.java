@@ -18,6 +18,17 @@ public class KamisadoBoardLook extends ClassicBoardLook {
             {K_Color.BROWN, K_Color.GREEN, K_Color.RED, K_Color.YELLOW, K_Color.PINK, K_Color.PURPLE, K_Color.BLUE, K_Color.ORANGE},
     };
 
+    private final String[][] board_color_low = {
+            {K_Color.ORANGE_LOW, K_Color.BLUE_LOW, K_Color.PURPLE_LOW, K_Color.PINK_LOW, K_Color.YELLOW_LOW, K_Color.RED_LOW, K_Color.GREEN_LOW, K_Color.BROWN_LOW},
+            {K_Color.RED_LOW, K_Color.ORANGE_LOW, K_Color.PINK_LOW, K_Color.GREEN_LOW, K_Color.BLUE_LOW, K_Color.YELLOW_LOW, K_Color.BROWN_LOW, K_Color.PURPLE_LOW},
+            {K_Color.GREEN_LOW, K_Color.PINK_LOW, K_Color.ORANGE_LOW, K_Color.RED_LOW, K_Color.PURPLE_LOW, K_Color.BROWN_LOW, K_Color.YELLOW_LOW, K_Color.BLUE_LOW},
+            {K_Color.PINK_LOW, K_Color.PURPLE_LOW, K_Color.BLUE_LOW, K_Color.ORANGE_LOW, K_Color.BROWN_LOW, K_Color.GREEN_LOW, K_Color.RED_LOW, K_Color.YELLOW_LOW},
+            {K_Color.YELLOW_LOW, K_Color.RED_LOW, K_Color.GREEN_LOW, K_Color.BROWN_LOW, K_Color.ORANGE_LOW, K_Color.BLUE_LOW, K_Color.PURPLE_LOW, K_Color.PINK_LOW},
+            {K_Color.BLUE_LOW, K_Color.YELLOW_LOW, K_Color.BROWN_LOW, K_Color.PURPLE_LOW, K_Color.RED_LOW, K_Color.ORANGE_LOW, K_Color.PINK_LOW, K_Color.GREEN_LOW},
+            {K_Color.PURPLE_LOW, K_Color.BROWN_LOW, K_Color.YELLOW_LOW, K_Color.BLUE_LOW, K_Color.GREEN_LOW, K_Color.PINK_LOW, K_Color.ORANGE_LOW, K_Color.RED_LOW},
+            {K_Color.BROWN_LOW, K_Color.GREEN_LOW, K_Color.RED_LOW, K_Color.YELLOW_LOW, K_Color.PINK_LOW, K_Color.PURPLE_LOW, K_Color.BLUE_LOW, K_Color.ORANGE_LOW},
+    };
+
     public KamisadoBoardLook(int cellSize, ContainerElement element) {
         super(cellSize, element, -1, null, null, 0, Color.BLACK, 3, Color.BLACK, true);
     }
@@ -37,6 +48,25 @@ public class KamisadoBoardLook extends ClassicBoardLook {
                 cells[i][j].setX(j * colWidth + gapXToCells);
                 cells[i][j].setY(i * rowHeight + gapYToCells);
                 addShape(cells[i][j]);
+            }
+        }
+    }
+
+    @Override
+    public void onFaceChange() {
+        ContainerElement board = (ContainerElement) element;
+        boolean[][] reach = board.getReachableCells();
+
+        for (int i = 0; i < nbRows; i++) {
+            for (int j = 0; j < nbCols; j++) {
+                if (reach[i][j]) {
+                    cells[i][j].setStrokeWidth(3);
+                    cells[i][j].setStrokeMiterLimit(10);
+                    cells[i][j].setStrokeType(StrokeType.CENTERED);
+                    cells[i][j].setStroke(Color.valueOf(board_color_low[i][j]));
+                } else {
+                    cells[i][j].setStrokeWidth(0);
+                }
             }
         }
     }

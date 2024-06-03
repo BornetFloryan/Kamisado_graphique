@@ -277,4 +277,8 @@ public class Model {
         if (gameStageModel == null) return;
         gameStageModel.unselectAll();
     }
+
+    public String getLockedColor() {
+        return null;
+    }
 }

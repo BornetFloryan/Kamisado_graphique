@@ -11,7 +11,7 @@ public class HoleBoard extends ContainerElement {
     public HoleBoard(int x, int y, GameStageModel gameStageModel) {
         // call the super-constructor to create a 3x3 grid, named "holeboard", and in x,y in space
         super("holeboard", x, y, 8 , 8, gameStageModel);
-        resetReachableCells(false);
+        resetReachableCells(true);
     }
 
 //    public void setValidCells(int number) {
