@@ -78,7 +78,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
         int[] targetCell = lookBoard.getCellFromSceneLocation(clickPosition);
 
-        if (board.canReachCell(targetCell[0], targetCell[1])) {
+        if (targetCell != null && board.canReachCell(targetCell[0], targetCell[1])) {
             // Get the color of the board cell
             String color = lookBoard.getColor(targetCell[0], targetCell[1]);
             stageModel.setLockedColor(color);
