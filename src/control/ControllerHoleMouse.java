@@ -9,7 +9,6 @@ import boardifier.model.ElementTypes;
 import boardifier.model.GameElement;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
-import boardifier.model.animation.AnimationTypes;
 import boardifier.view.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -21,73 +20,113 @@ import view.KamisadoBoardLook;
 import java.util.List;
 
 /**
- * A basic mouse controller that just grabs the mouse clicks and prints out some informations.
- * It gets the elements of the scene that are at the clicked position and prints them.
+ * A mouse controller that handles mouse clicks, selects pawns, and moves them.
  */
 public class ControllerHoleMouse extends ControllerMouse implements EventHandler<MouseEvent> {
-    Pawn pawn = null;
+    private Pawn selectedPawn = null;
 
     public ControllerHoleMouse(Model model, View view, Controller control) {
         super(model, view, control);
     }
 
+    @Override
     public void handle(MouseEvent event) {
-        // if mouse event capture is disabled in the model, just return
-        if (!model.isCaptureMouseEvent()) return;
+        if (!model.isCaptureMouseEvent()) return; // Check if mouse event capture is enabled
 
-        // get the clic x,y in the whole scene (this includes the menu bar if it exists)
-        Coord2D clic = new Coord2D(event.getSceneX(), event.getSceneY());
-
-        // get elements at that position
-        List<GameElement> list = control.elementsAt(clic);
+        Coord2D clickPosition = new Coord2D(event.getSceneX(), event.getSceneY());
+        List<GameElement> clickedElements = control.elementsAt(clickPosition);
 
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         HoleBoard board = (HoleBoard) stageModel.getBoard();
 
-        if (model.getGameStage().getState() == KamisadoStageModel.STATE_SELECTPAWN) {
-            for (GameElement element : list) {
-                if (element.getType() == ElementTypes.getType("pawn")) {
-                    pawn = (Pawn) element;
-                    element.toggleSelected();
-                    model.getGameStage().setState(KamisadoStageModel.STATE_SELECTDEST);
-                    board.setValidCells(pawn);
-                    return;
+
+        if (stageModel.getState() == KamisadoStageModel.STATE_SELECTPAWN && model.getLockedColor() == null) {
+            handleSelectPawnState(clickedElements, board, stageModel);
+        } else if (stageModel.getState() == KamisadoStageModel.STATE_SELECTDEST){
+            handleSelectDestState(clickedElements, board, stageModel, clickPosition);
+        }
+    }
+
+    private void handleSelectPawnState(List<GameElement> clickedElements, HoleBoard board, KamisadoStageModel stageModel) {
+        for (GameElement element : clickedElements) {
+            if (element.getType() == ElementTypes.getType("pawn")) {
+                if (selectedPawn != null) {
+                    selectedPawn.toggleSelected(); // Unselect previously selected pawn
                 }
+                selectedPawn = (Pawn) element;
+                selectedPawn.toggleSelected(); // Select new pawn
+                stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
+                board.setValidCells(selectedPawn);
+                return;
             }
-        } else if (model.getGameStage().getState() == KamisadoStageModel.STATE_SELECTDEST) {
-            for (GameElement element : list) {
-                if (element.isSelected()) {
-                    pawn = null;
-                    element.toggleSelected();
-                    model.getGameStage().setState(KamisadoStageModel.STATE_SELECTPAWN);
-                    board.resetReachableCells(false);
-                }
+        }
+    }
+
+    private void handleSelectDestState(List<GameElement> clickedElements, HoleBoard board, KamisadoStageModel stageModel, Coord2D clickPosition) {
+        for (GameElement element : clickedElements) {
+            if (element.isSelected() && stageModel.getLockedColor() == null) {
+                resetSelection(board, stageModel);
+                return;
+            } else if (element.getType() == ElementTypes.getType("pawn") && stageModel.getLockedColor() == null) {
+                handleSelectPawnState(clickedElements, board, stageModel);
+                return;
             }
         }
 
-        // Check if pawn is still null
-        if (pawn == null) return;
+        if (selectedPawn == null) return; // If no pawn is selected, return
 
-
-
-        // thirdly, get the clicked cell in the 3x3 board
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
+        int[] targetCell = lookBoard.getCellFromSceneLocation(clickPosition);
 
-        // get the cell in the board that was clicked
-        int[] to = lookBoard.getCellFromSceneLocation(clic);
+        if (board.canReachCell(targetCell[0], targetCell[1])) {
+            // Get the color of the board cell
+            String color = lookBoard.getColor(targetCell[0], targetCell[1]);
+            stageModel.setLockedColor(color);
 
+            performMoveAction(stageModel, targetCell);
+        }
+    }
 
-        // Uncomment and adjust the following block if needed
-         if (board.canReachCell(to[0], to[1])) {
-             ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
-             actions.setDoEndOfTurn(true); // after playing this action list, it will be the end of turn for current player.
+    private void resetSelection(HoleBoard board, KamisadoStageModel stageModel) {
+        selectedPawn.toggleSelected(); // Unselect the pawn
+        selectedPawn = null;
+        board.resetReachableCells(false);
+//        stageModel.setState(KamisadoStageModel.STATE_SELECTPAWN);
+    }
 
-             stageModel.unselectAll();
-             stageModel.setState(KamisadoStageModel.STATE_SELECTPAWN);
+    public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board) {
+        Pawn[] pawns = null;
 
-             ActionPlayer play = new ActionPlayer(model, control, actions);
-             play.start();
-         }
+        System.out.println("Player: " + stageModel.getCurrentPlayerName());
+        System.out.println("Equals: " + stageModel.getCurrentPlayerName().equals("Player X"));
+
+        if (stageModel.getCurrentPlayerName().equals("Player X") || stageModel.getCurrentPlayerName().equals("Computer X")) {
+            pawns = stageModel.getXPawns();
+        } else if (stageModel.getCurrentPlayerName().equals("Player O") || stageModel.getCurrentPlayerName().equals("Computer O")) {
+            pawns = stageModel.getOPawns();
+        }
+
+        String color = stageModel.getLockedColor();
+
+        for (Pawn pawn : pawns) {
+            if (pawn.getColor().equals(color)) {
+                selectedPawn = pawn;
+                selectedPawn.toggleSelected();
+                stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
+                board.setValidCells(selectedPawn);
+                return;
+            }
+        }
+
+    }
+
+    private void performMoveAction(KamisadoStageModel stageModel, int[] targetCell) {
+        ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, selectedPawn, targetCell[0], targetCell[1]);
+        actions.setDoEndOfTurn(true);
+
+        resetSelection((HoleBoard) stageModel.getBoard(), stageModel);
+
+        ActionPlayer actionPlayer = new ActionPlayer(model, control, actions);
+        actionPlayer.start();
     }
 }
-

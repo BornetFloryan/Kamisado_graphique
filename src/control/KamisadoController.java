@@ -7,6 +7,7 @@ import boardifier.control.Logger;
 import boardifier.model.Model;
 import boardifier.model.Player;
 import boardifier.view.View;
+import model.HoleBoard;
 import model.KamisadoStageModel;
 
 public class KamisadoController extends Controller {
@@ -37,6 +38,7 @@ public class KamisadoController extends Controller {
         }
         else {
             Logger.debug("PLAYER PLAYS");
+            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), (HoleBoard) ((KamisadoStageModel) model.getGameStage()).getBoard());
         }
     }
 }

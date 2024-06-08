@@ -60,15 +60,20 @@ public class KamisadoBoardLook extends ClassicBoardLook {
         for (int i = 0; i < nbRows; i++) {
             for (int j = 0; j < nbCols; j++) {
                 if (reach[i][j]) {
-                    cells[i][j].setStrokeWidth(3);
+                    cells[i][j].setStrokeWidth(2);
                     cells[i][j].setStrokeMiterLimit(10);
                     cells[i][j].setStrokeType(StrokeType.CENTERED);
-                    cells[i][j].setStroke(Color.valueOf(board_color[i][j]));
+                    cells[i][j].setStroke(Color.valueOf(Color.WHITE.toString()));
+                    cells[i][j].setFill(Color.valueOf(board_color[i][j]));
                 } else {
                     cells[i][j].setFill(Color.valueOf(board_color_low[i][j]));
                     cells[i][j].setStrokeWidth(0);
                 }
             }
         }
+    }
+
+    public String getColor(int row, int col) {
+        return board_color[row][col];
     }
 }

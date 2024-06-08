@@ -35,7 +35,7 @@ public class KamisadoStageFactory extends StageElementsFactory {
             XPawns[i] = pawn;
             board.addElement(pawn, 7, i);
         }
-        stageModel.setOPawns(XPawns);
+        stageModel.setXPawns(XPawns);
 
         Pawn[] OPawns = new Pawn[8];
         for (int i = 0; i < 8; i++) {
@@ -43,6 +43,6 @@ public class KamisadoStageFactory extends StageElementsFactory {
             OPawns[i] = pawn;
             board.addElement(pawn, 0, i);
         }
-        stageModel.setXPawns(OPawns);
+        stageModel.setOPawns(OPawns);
     }
 }

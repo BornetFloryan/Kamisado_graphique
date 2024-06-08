@@ -67,6 +67,10 @@ public class KamisadoStageModel extends GameStageModel {
         return lockedColor;
     }
 
+    public void setLockedColor(String color) {
+        lockedColor = color;
+    }
+
     public HoleBoard getHoleBoard() {
         return board;
     }

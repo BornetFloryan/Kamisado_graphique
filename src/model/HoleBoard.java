@@ -26,7 +26,34 @@ public class HoleBoard extends ContainerElement {
     }
 
     public List<Point> computeValidCells(Pawn pawn) {
+        KamisadoStageModel stage = (KamisadoStageModel) gameStageModel;
         List<Point> lst = new ArrayList<>();
+        int[][] directions;
+
+        if (stage.getCurrentPlayerName().equals("Player X") || stage.getCurrentPlayerName().equals("Computer X")) {
+            // Up, Up-Right, Up-Left
+            directions = new int[][]{{0, -1}, {1, -1}, {-1, -1}};
+        } else {
+            // Down, Down-Right, Down-Left
+            directions = new int[][]{{0, 1}, {-1, 1}, {1, 1}};
+        }
+
+        for (int[] dir : directions) {
+            int dx = dir[0], dy = dir[1];
+            int x = (int) (pawn.getX() / (600f / stage.getBoard().getNbRows())) + dx;
+            int y = (int) (pawn.getY() / (600f / stage.getBoard().getNbCols())) + dy;
+
+            while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+                if (stage.getBoard().getElement(y, x) == null) {
+                    lst.add(new Point(x, y));
+                } else {
+                    break;
+                }
+
+                x += dx;
+                y += dy;
+            }
+        }
 
         return lst;
     }

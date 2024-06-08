@@ -10,8 +10,6 @@ import boardifier.model.GameStageModel;
  * There are no setters because the state of a Hole pawn is fixed.
  */
 public class Pawn extends GameElement {
-
-    public static int PAWN_X = 0;
     private final int number;
     private final String color;
     private final char symbol;
@@ -25,14 +23,9 @@ public class Pawn extends GameElement {
         type = ElementTypes.getType("pawn");
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public String getColor() {
         return color;
     }
-
 
     public char getSymbol() {
         return symbol;
