@@ -65,7 +65,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
     private void handleSelectDestState(List<GameElement> clickedElements, HoleBoard board, KamisadoStageModel stageModel, Coord2D clickPosition) {
         for (GameElement element : clickedElements) {
             if (element.isSelected() && stageModel.getLockedColor() == null) {
-                resetSelection(board, stageModel);
+                resetSelection(board);
                 return;
             } else if (element.getType() == ElementTypes.getType("pawn") && stageModel.getLockedColor() == null) {
                 handleSelectPawnState(clickedElements, board, stageModel);
@@ -87,18 +87,14 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         }
     }
 
-    private void resetSelection(HoleBoard board, KamisadoStageModel stageModel) {
+    private void resetSelection(HoleBoard board) {
         selectedPawn.toggleSelected(); // Unselect the pawn
         selectedPawn = null;
         board.resetReachableCells(false);
-//        stageModel.setState(KamisadoStageModel.STATE_SELECTPAWN);
     }
 
     public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board) {
         Pawn[] pawns = null;
-
-        System.out.println("Player: " + stageModel.getCurrentPlayerName());
-        System.out.println("Equals: " + stageModel.getCurrentPlayerName().equals("Player X"));
 
         if (stageModel.getCurrentPlayerName().equals("Player X") || stageModel.getCurrentPlayerName().equals("Computer X")) {
             pawns = stageModel.getXPawns();
@@ -124,7 +120,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, selectedPawn, targetCell[0], targetCell[1]);
         actions.setDoEndOfTurn(true);
 
-        resetSelection((HoleBoard) stageModel.getBoard(), stageModel);
+        resetSelection((HoleBoard) stageModel.getBoard());
 
         ActionPlayer actionPlayer = new ActionPlayer(model, control, actions);
         actionPlayer.start();
