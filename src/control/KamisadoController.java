@@ -38,7 +38,12 @@ public class KamisadoController extends Controller {
         }
         else {
             Logger.debug("PLAYER PLAYS");
-            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), (HoleBoard) ((KamisadoStageModel) model.getGameStage()).getBoard());
+
+            if (stageModel.isWin()) {
+                return;
+            }
+
+            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(stageModel, (HoleBoard) stageModel.getBoard());
         }
     }
 }

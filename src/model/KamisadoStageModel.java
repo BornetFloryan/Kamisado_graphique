@@ -71,7 +71,21 @@ public class KamisadoStageModel extends GameStageModel {
         lockedColor = color;
     }
 
-    public HoleBoard getHoleBoard() {
-        return board;
+    public boolean isWin() {
+        for (int i = 0; i < 8; i++) {
+            Pawn pawnXWin = (Pawn) board.getElement(0, i);
+            Pawn pawnOWin = (Pawn) board.getElement(7, i);
+            if (pawnXWin != null && pawnXWin.getSymbol() == 'X') {
+                model.setIdWinner(0);
+                model.stopGame();
+                return true;
+            } else if (pawnOWin != null && pawnOWin.getSymbol() == 'O') {
+                model.setIdWinner(1);
+                model.stopGame();
+                return true;
+            }
+        }
+
+        return false;
     }
 }
