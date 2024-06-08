@@ -31,7 +31,7 @@ public class KamisadoStageFactory extends StageElementsFactory {
         // Pawns of Kamisado game
         Pawn[] XPawns = new Pawn[8];
         for (int i = 0; i < 8; i++) {
-            Pawn pawn = new Pawn(i + 1, defaultXpawnsColor[i], 'X', stageModel);
+            Pawn pawn = new Pawn(0, defaultXpawnsColor[i], 'X', stageModel);
             XPawns[i] = pawn;
             board.addElement(pawn, 7, i);
         }
@@ -39,7 +39,7 @@ public class KamisadoStageFactory extends StageElementsFactory {
 
         Pawn[] OPawns = new Pawn[8];
         for (int i = 0; i < 8; i++) {
-            Pawn pawn = new Pawn(i + 1, defaultOpawnsColor[i], 'O', stageModel);
+            Pawn pawn = new Pawn(1, defaultOpawnsColor[i], 'O', stageModel);
             OPawns[i] = pawn;
             board.addElement(pawn, 0, i);
         }

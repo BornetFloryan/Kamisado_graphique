@@ -21,11 +21,14 @@ public class KamisadoController extends Controller {
     public void endOfTurn() {
         // use the default method to compute next player
         model.setNextPlayer();
+
         // get the new player
         Player p = model.getCurrentPlayer();
+
         // change the text of the TextElement
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         stageModel.getPlayerName().setText(p.getName());
+
         if (p.getType() == Player.COMPUTER) {
             Logger.debug("COMPUTER PLAYS");
             Decider decider = new HoleSmartDecider(model,this);
