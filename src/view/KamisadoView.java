@@ -41,6 +41,10 @@ public class KamisadoView extends View {
         return menuStart;
     }
 
+    public MenuItem getManuGameMode() {
+        return manuGameMode;
+    }
+
     public MenuItem getMenuHome() {
         return menuHome;
     }

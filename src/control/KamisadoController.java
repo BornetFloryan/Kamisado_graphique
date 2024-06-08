@@ -19,6 +19,7 @@ public class KamisadoController extends Controller {
         setControlAction (new ControllerHoleAction(model, view, this));
     }
 
+    @Override
     public void endOfTurn() {
         // use the default method to compute next player
         model.setNextPlayer();

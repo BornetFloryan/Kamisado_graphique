@@ -9,8 +9,7 @@ import javafx.scene.text.Text;
 import model.Pawn;
 
 public class PawnLook extends ElementLook {
-    private Circle circle;
-    private int radius;
+    private final int radius;
 
     public PawnLook(int radius, GameElement element) {
         super(element);
@@ -26,7 +25,7 @@ public class PawnLook extends ElementLook {
     @Override
     protected void render() {
         Pawn pawn = (Pawn)element;
-        circle = new Circle();
+        Circle circle = new Circle();
         circle.setRadius(radius);
 
         circle.setFill(Color.valueOf(pawn.getColor()));

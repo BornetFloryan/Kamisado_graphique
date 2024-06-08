@@ -45,8 +45,8 @@ public class KamisadoBoardLook extends ClassicBoardLook {
                 cells[i][j].setSmooth(false);
                 cells[i][j].setStroke(Color.valueOf(board_color[i][j]));
                 cells[i][j].setStrokeType(StrokeType.INSIDE);
-                cells[i][j].setX(j * colWidth + gapXToCells);
-                cells[i][j].setY(i * rowHeight + gapYToCells);
+                cells[i][j].setX(j * (double) (colWidth + gapXToCells));
+                cells[i][j].setY(i * (double) (rowHeight + gapYToCells));
                 addShape(cells[i][j]);
             }
         }

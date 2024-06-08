@@ -5,8 +5,8 @@ import boardifier.model.*;
 public class KamisadoStageModel extends GameStageModel {
 
     // states
-    public final static int STATE_SELECTPAWN = 1; // the player must select a pawn
-    public final static int STATE_SELECTDEST = 2; // the player must select a destination
+    public static final int STATE_SELECTPAWN = 1; // the player must select a pawn
+    public static final int STATE_SELECTDEST = 2; // the player must select a destination
 
     // stage elements
     private HoleBoard board;

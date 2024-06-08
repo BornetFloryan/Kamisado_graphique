@@ -104,6 +104,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         String color = stageModel.getLockedColor();
 
+        assert pawns != null;
         for (Pawn pawn : pawns) {
             if (pawn.getColor().equals(color)) {
                 selectedPawn = pawn;
