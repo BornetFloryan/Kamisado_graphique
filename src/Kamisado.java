@@ -2,8 +2,9 @@ import boardifier.control.StageFactory;
 import boardifier.model.Model;
 import control.KamisadoController;
 import javafx.application.Application;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import view.KamisadoRootPane;
+import view.K_HomeRootPane;
 import view.KamisadoView;
 
 public class Kamisado extends Application {
@@ -41,8 +42,12 @@ public class Kamisado extends Application {
         // register a single stage for the game, called hole
         StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
 
+        double width = Screen.getPrimary().getBounds().getWidth();
+        double height = Screen.getPrimary().getBounds().getHeight();
+
+
         // create the root pane, using the subclass HoleRootPane
-        KamisadoRootPane rootPane = new KamisadoRootPane();
+        K_HomeRootPane rootPane = new K_HomeRootPane(width, height);
 
         // create the global view.
         KamisadoView view = new KamisadoView(model, stage, rootPane);

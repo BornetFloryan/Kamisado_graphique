@@ -29,17 +29,23 @@ public class PawnLook extends ElementLook {
         circle.setRadius(radius);
 
         circle.setFill(Color.valueOf(pawn.getColor()));
-        circle.setStroke(Color.BLACK);
-        circle.setStrokeWidth(2);
+        if (pawn.getSymbol() == 'O') {
+            circle.setStroke(Color.WHITE);
+        } else {
+            circle.setStroke(Color.BLACK);
+        }
+
+//        circle.setStroke(Color.BLACK);
+        circle.setStrokeWidth(3);
         circle.setSmooth(true);
         addShape(circle);
 
-        // Add pawn symbol
-        Text pawnSymbol = new Text("" + pawn.getSymbol());
-        pawnSymbol.setFont(new Font(radius)); // Adjust font size based on the radius
-        pawnSymbol.setFill(Color.BLACK); // Set color of the pawn symbol
-        pawnSymbol.setX(-radius / 2f + 4); // Center the pawn symbol
-        pawnSymbol.setY(radius / 2f - 4); // Center the pawn symbol
-        addShape(pawnSymbol); // Add the pawn symbol to the shapes
+//        // Add pawn symbol
+//        Text pawnSymbol = new Text("" + pawn.getSymbol());
+//        pawnSymbol.setFont(new Font(radius)); // Adjust font size based on the radius
+//        pawnSymbol.setFill(Color.BLACK); // Set color of the pawn symbol
+//        pawnSymbol.setX(-radius / 2f + 3.8); // Center the pawn symbol
+//        pawnSymbol.setY(radius / 2f - 5); // Center the pawn symbol
+//        addShape(pawnSymbol); // Add the pawn symbol to the shapes
     }
 }

@@ -39,8 +39,7 @@ public class HoleBoard extends ContainerElement {
         }
 
         for (int[] dir : directions) {
-            int dx = dir[0];
-            int dy = dir[1];
+            int dx = dir[0], dy = dir[1];
             int x = (int) (pawn.getX() / (600f / stage.getBoard().getNbRows())) + dx;
             int y = (int) (pawn.getY() / (600f / stage.getBoard().getNbCols())) + dy;
 

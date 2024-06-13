@@ -17,14 +17,12 @@ public class KamisadoStageFactory extends StageElementsFactory {
 
     @Override
     public void setup() {
-
-
         TextElement text = new TextElement(stageModel.getCurrentPlayerName(), stageModel);
         text.setLocation(10, 20);
         stageModel.setPlayerName(text);
 
         // Board of Kamisado game
-        HoleBoard board = new HoleBoard(10, 10, stageModel);
+        HoleBoard board = new HoleBoard(10, 30, stageModel);
         stageModel.setBoard(board);
         stageModel.addElement(board);
 

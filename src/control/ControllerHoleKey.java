@@ -1,11 +1,34 @@
 package control;
 
+import boardifier.control.Controller;
 import boardifier.control.ControllerKey;
+import boardifier.control.Logger;
 import boardifier.model.Model;
 import boardifier.view.View;
+import javafx.event.*;
+import javafx.scene.input.*;
 
-public class ControllerHoleKey extends ControllerKey {
-    public ControllerHoleKey(Model model, View view, KamisadoController kamisadoController) {
-        super(model, view, kamisadoController);
+import java.util.Stack;
+
+/**
+ * A basic keystrokes handler.
+ * Generally useless for board games, but it can still be used if needed
+ */
+public class ControllerHoleKey extends ControllerKey implements EventHandler<KeyEvent> {
+    // Create a stack of key events
+    private Stack<KeyEvent> keyEvents = new Stack<>();
+
+    public ControllerHoleKey(Model model, View view, Controller control) {
+        super(model, view, control);
+    }
+
+    public void handle(KeyEvent event) {
+        System.out.println("ControllerHoleKey created");
+        if (!model.isCaptureKeyEvent()) return;
+
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            System.out.println("Key pressed: " + event.getCode().toString());
+        }
     }
 }
+

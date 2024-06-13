@@ -34,26 +34,24 @@ public class ControllerHoleAction extends ControllerAction implements EventHandl
 
     private void setMenuHandlers() {
         // set event handler on the MenuStart item
-        holeView.getMenuStart().setOnAction(e -> {
-            try {
-                control.startGame();
-            }
-            catch(GameException err) {
-                System.err.println(err.getMessage());
-                System.exit(1);
-            }
-        });
-
-        // set event handler on the MenuIntro item
-        holeView.getMenuHome().setOnAction(e -> {
-            control.stopGame();
-            holeView.resetView();
-        });
-
-        // set event handler on the MenuQuit item
-        holeView.getMenuQuit().setOnAction(e -> {
-            System.exit(0);
-        });
+//        holeView.getMenuStart().setOnAction(_ -> {
+//            try {
+//                control.startGame();
+//            }
+//            catch(GameException err) {
+//                System.err.println(err.getMessage());
+//                System.exit(1);
+//            }
+//        });
+//
+//        // set event handler on the MenuIntro item
+//        holeView.getMenuHome().setOnAction(_ -> {
+//            control.stopGame();
+//            holeView.resetView();
+//        });
+//
+//        // set event handler on the MenuQuit item
+//        holeView.getMenuQuit().setOnAction(_ -> System.exit(0));
     }
 
     /**
