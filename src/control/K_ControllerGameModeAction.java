@@ -13,8 +13,8 @@ import view.KamisadoView;
 
 public class K_ControllerGameModeAction extends ControllerAction implements EventHandler<ActionEvent> {
     private KamisadoView view;
-    private K_GameModePane rootPane;
-    private Stage stage;
+    private final K_GameModePane rootPane;
+    private final Stage stage;
 
     public K_ControllerGameModeAction(Model model, View view, KamisadoController control, Stage stage) {
         super(model, view, control);
@@ -38,6 +38,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
 
             try {
                 control.startGame();
+                stage.setFullScreen(true);
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }

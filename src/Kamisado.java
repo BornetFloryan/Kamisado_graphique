@@ -25,15 +25,15 @@ public class Kamisado extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        double width = Screen.getPrimary().getBounds().getWidth();
+        double height = Screen.getPrimary().getBounds().getHeight();
+
         // create the global model
         Model model = new Model();
 
 
         // register a single stage for the game, called hole
         StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
-
-        double width = Screen.getPrimary().getBounds().getWidth();
-        double height = Screen.getPrimary().getBounds().getHeight();
 
 
         // create the root pane, using the subclass HoleRootPane

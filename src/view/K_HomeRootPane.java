@@ -18,7 +18,6 @@ public class K_HomeRootPane extends RootPane {
     private final double height;
 
     private Button startButton;
-    private Button gameModeButton;
     private Button howToPlayButton;
     private Button quitButton;
 
@@ -38,7 +37,7 @@ public class K_HomeRootPane extends RootPane {
         frame.setBackground(new Background(new BackgroundFill(Color.rgb(230, 230, 230), null, null)));
 
         Text text = new Text("Playing kamisado !");
-        text.setFont(new Font(50));
+        text.setFont(new Font("SansSerif", 50));
         text.setFill(Color.BLACK);
 
         StackPane textContainer = new StackPane(text);
@@ -47,26 +46,20 @@ public class K_HomeRootPane extends RootPane {
         startButton = new Button("Start");
         startButton.setPadding(new Insets(10, 0, 10, 0));
         startButton.setMaxWidth(width / 5);
-        startButton.setFont(new Font(20));
-
-        gameModeButton = new Button("Game mode");
-        gameModeButton.setPadding(new Insets(10, 0, 10, 0));
-        gameModeButton.setMaxWidth(width / 5);
-        gameModeButton.setFont(new Font(20));
+        startButton.setFont(new Font("SansSerif", 20));
 
         howToPlayButton = new Button("How to play");
         howToPlayButton.setPadding(new Insets(10, 0, 10, 0));
         howToPlayButton.setMaxWidth(width / 5);
-        howToPlayButton.setFont(new Font(20));
+        howToPlayButton.setFont(new Font("SansSerif", 20));
 
         quitButton = new Button("Quit");
         quitButton.setPadding(new Insets(10, 0, 10, 0));
         quitButton.setMaxWidth(width / 5);
-        quitButton.setFont(new Font(20));
+        quitButton.setFont(new Font("SansSerif", 20));
 
 
-        frame.getChildren().addAll(textContainer, startButton, gameModeButton, howToPlayButton, quitButton);
-
+        frame.getChildren().addAll(textContainer, startButton, howToPlayButton, quitButton);
 
 
         group.getChildren().clear();
@@ -75,10 +68,6 @@ public class K_HomeRootPane extends RootPane {
 
     public Button getStartButton() {
         return startButton;
-    }
-
-    public Button getGameModeButton() {
-        return gameModeButton;
     }
 
     public Button getHowToPlayButton() {

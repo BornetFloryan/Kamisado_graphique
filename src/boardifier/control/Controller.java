@@ -106,8 +106,6 @@ public abstract class Controller {
         view.getRootPane().setFocusTraversable(true);
         view.getRootPane().requestFocus();
 
-
-
         controlAnimation.startAnimation();
     }
 
@@ -250,12 +248,12 @@ public abstract class Controller {
         else if (option.get() == newGame) {
             try {
                 startGame();
+                view.getStage().setFullScreen(true);
             } catch (GameException e) {
                 e.printStackTrace();
                 System.exit(1);
             }
         }
-        // abnormal case :-)
         else {
             System.err.println("Abnormal case: dialog closed with not choice");
             System.exit(1);

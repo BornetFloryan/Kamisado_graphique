@@ -1,12 +1,17 @@
 package model;
 
 import boardifier.model.*;
+import javafx.stage.Screen;
 
 public class KamisadoStageModel extends GameStageModel {
 
     // states
     public static final int STATE_SELECTPAWN = 1; // the player must select a pawn
     public static final int STATE_SELECTDEST = 2; // the player must select a destination
+
+    // size
+    private double width;
+    private double height;
 
     // stage elements
     private HoleBoard board;
@@ -18,11 +23,13 @@ public class KamisadoStageModel extends GameStageModel {
     public KamisadoStageModel(String name, Model model) {
         super(name, model);
         state = STATE_SELECTPAWN;
+        this.width = Screen.getPrimary().getBounds().getWidth();
+        this.height = Screen.getPrimary().getBounds().getHeight();
     }
 
     @Override
     public StageElementsFactory getDefaultElementFactory() {
-        return new KamisadoStageFactory(this);
+        return new KamisadoStageFactory(this, width, height);
     }
 
     public TextElement getPlayerName() {
