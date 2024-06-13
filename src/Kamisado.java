@@ -1,5 +1,6 @@
 import boardifier.control.StageFactory;
 import boardifier.model.Model;
+import control.K_ControllerMenueAction;
 import control.KamisadoController;
 import javafx.application.Application;
 import javafx.stage.Screen;
@@ -27,17 +28,6 @@ public class Kamisado extends Application {
         // create the global model
         Model model = new Model();
 
-        // add some players taking mode into account
-        if (mode == 0) {
-            model.addHumanPlayer("Player X");
-            model.addHumanPlayer("Player O");
-        } else if (mode == 1) {
-            model.addHumanPlayer("Player X");
-            model.addComputerPlayer("Computer O");
-        } else if (mode == 2) {
-            model.addComputerPlayer("Computer X");
-            model.addComputerPlayer("Computer O");
-        }
 
         // register a single stage for the game, called hole
         StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
@@ -47,13 +37,14 @@ public class Kamisado extends Application {
 
 
         // create the root pane, using the subclass HoleRootPane
-        K_HomeRootPane rootPane = new K_HomeRootPane(width, height);
+        K_HomeRootPane homeRootPane = new K_HomeRootPane(width, height);
 
         // create the global view.
-        KamisadoView view = new KamisadoView(model, stage, rootPane);
+        KamisadoView view = new KamisadoView(model, stage, homeRootPane);
 
         // create the controllers.
         KamisadoController control = new KamisadoController(model, view);
+        control.setControlAction(new K_ControllerMenueAction(model, view, control, stage));
 
         // set the name of the first stage to create when the game is started
         control.setFirstStageName("kamisado");

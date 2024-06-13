@@ -23,7 +23,6 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
     }
 
     public void handle(KeyEvent event) {
-        System.out.println("ControllerHoleKey created");
         if (!model.isCaptureKeyEvent()) return;
 
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {

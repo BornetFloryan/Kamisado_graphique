@@ -16,7 +16,6 @@ public class KamisadoController extends Controller {
         super(model, view);
         setControlKey(new ControllerHoleKey(model, view, this));
         setControlMouse(new ControllerHoleMouse(model, view, this));
-        setControlAction (new ControllerHoleAction(model, view, this));
     }
 
     @Override
