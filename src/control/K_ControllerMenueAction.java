@@ -35,7 +35,6 @@ public class K_ControllerMenueAction extends ControllerAction implements EventHa
             control.setControlAction(new K_ControllerGameModeAction(model, view, (KamisadoController) control, stage));
         } else if (event.getSource() == rootPane.getHowToPlayButton()) {
             System.out.println("How to play");
-//            control.howToPlay();
         } else if (event.getSource() == rootPane.getQuitButton()) {
             System.exit(0);
         }

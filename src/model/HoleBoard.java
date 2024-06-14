@@ -30,7 +30,8 @@ public class HoleBoard extends ContainerElement {
         List<Point> lst = new ArrayList<>();
         int[][] directions;
 
-        if (stage.getCurrentPlayerName().equals("Player X") || stage.getCurrentPlayerName().equals("Computer X")) {
+        // If the name of the current player is equal to the first player name in the list of player
+        if (stage.getCurrentPlayerName().equals(stage.getModel().getPlayers().get(0).getName())) {
             // Up, Up-Right, Up-Left
             directions = new int[][]{{0, -1}, {1, -1}, {-1, -1}};
         } else {

@@ -10,8 +10,8 @@ public class KamisadoStageModel extends GameStageModel {
     public static final int STATE_SELECTDEST = 2; // the player must select a destination
 
     // size
-    private double width;
-    private double height;
+    private final double width;
+    private final double height;
 
     // stage elements
     private HoleBoard board;

@@ -9,17 +9,7 @@ import view.K_HomeRootPane;
 import view.KamisadoView;
 
 public class Kamisado extends Application {
-    private static int mode;
-
     public static void main(String[] args) {
-        if (args.length == 1) {
-            try {
-                mode = Integer.parseInt(args[0]);
-                if ((mode < 0) || (mode > 2)) mode = 0;
-            } catch (NumberFormatException e) {
-                mode = 0;
-            }
-        }
         launch(args);
     }
 
@@ -31,10 +21,8 @@ public class Kamisado extends Application {
         // create the global model
         Model model = new Model();
 
-
         // register a single stage for the game, called hole
         StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
-
 
         // create the root pane, using the subclass HoleRootPane
         K_HomeRootPane homeRootPane = new K_HomeRootPane(width, height);

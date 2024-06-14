@@ -23,6 +23,8 @@ public class KamisadoController extends Controller {
         // use the default method to compute next player
         model.setNextPlayer();
 
+        System.out.println(model.getCurrentPlayer().getName() + " plays");
+
         // get the new player
         Player p = model.getCurrentPlayer();
 

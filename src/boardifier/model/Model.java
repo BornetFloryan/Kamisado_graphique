@@ -281,4 +281,12 @@ public class Model {
     public String getLockedColor() {
         return null;
     }
+
+    public void setFirstPlayerName(String playerName) {
+        players.get(0).setName(playerName);
+    }
+
+    public void setSecondPlayerName(String playerName) {
+        players.get(1).setName(playerName);
+    }
 }

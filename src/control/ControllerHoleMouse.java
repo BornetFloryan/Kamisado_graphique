@@ -94,11 +94,11 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
     }
 
     public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board) {
-        Pawn[] pawns = null;
+        Pawn[] pawns;
 
-        if (stageModel.getCurrentPlayerName().equals("Player X") || stageModel.getCurrentPlayerName().equals("Computer X")) {
+        if (stageModel.getCurrentPlayerName().equals(stageModel.getModel().getPlayers().get(0).getName())) {
             pawns = stageModel.getXPawns();
-        } else if (stageModel.getCurrentPlayerName().equals("Player O") || stageModel.getCurrentPlayerName().equals("Computer O")) {
+        } else {
             pawns = stageModel.getOPawns();
         }
 
