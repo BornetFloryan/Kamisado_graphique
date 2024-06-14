@@ -38,26 +38,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getPvPButton()) {
-            stage.setFullScreen(false);
-
-            Dialog<Pair<String, String>> dialog = getPlayerNamesDialog();
-            Optional<Pair<String, String>> result = dialog.showAndWait();
-
-            result.ifPresent(playerNames -> {
-                String player1Name = playerNames.getKey().isEmpty() ? "Player 1" : playerNames.getKey();
-                String player2Name = playerNames.getValue().isEmpty() ? "Player 2" : playerNames.getValue();
-
-                model.addHumanPlayer(player1Name);
-                model.addHumanPlayer(player2Name);
-            });
-
-            stage.setFullScreen(true);
-            try {
-                control.startGame();
-                stage.setFullScreen(true);
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-            }
+            startGame();
         }
         else if (event.getSource() == rootPane.getPvCButton()) {
             System.out.println("Player vs Computer");
@@ -102,5 +83,28 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
         });
 
         return dialog;
+    }
+
+    private void startGame() {
+        stage.setFullScreen(false);
+
+        Dialog<Pair<String, String>> dialog = getPlayerNamesDialog();
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        result.ifPresent(playerNames -> {
+            String player1Name = playerNames.getKey().isEmpty() ? "Player 1" : playerNames.getKey();
+            String player2Name = playerNames.getValue().isEmpty() ? "Player 2" : playerNames.getValue();
+
+            model.addHumanPlayer(player1Name);
+            model.addHumanPlayer(player2Name);
+        });
+
+        stage.setFullScreen(true);
+        try {
+            control.startGame();
+            stage.setFullScreen(true);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
