@@ -7,16 +7,21 @@ import boardifier.control.Logger;
 import boardifier.model.Model;
 import boardifier.model.Player;
 import boardifier.view.View;
+import model.AISelector;
 import model.HoleBoard;
 import model.KamisadoStageModel;
 
+import java.util.List;
+
 public class KamisadoController extends Controller {
+    private AISelector aiSelector;
 
     public KamisadoController(Model model, View view) {
         super(model, view);
         setControlKey(new ControllerHoleKey(model, view, this));
         setControlMouse(new ControllerHoleMouse(model, view, this));
     }
+
 
     @Override
     public void endOfTurn() {
@@ -26,13 +31,17 @@ public class KamisadoController extends Controller {
         // get the new player
         Player p = model.getCurrentPlayer();
 
+        System.out.println("Current player id: " + model.getIdPlayer() + ",  type: " + p.getType() + ", name: " + p.getName());
+
         // change the text of the TextElement
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         stageModel.getPlayerName().setText(p.getName());
 
         if (p.getType() == Player.COMPUTER) {
+            System.out.println("COMPUTER PLAYS");
+
             Logger.debug("COMPUTER PLAYS");
-            Decider decider = new HoleSmartDecider(model,this);
+            Decider decider = AISelector.getDecider(model.getIdPlayer());
             ActionPlayer play = new ActionPlayer(model, this, decider, null);
             play.start();
         }

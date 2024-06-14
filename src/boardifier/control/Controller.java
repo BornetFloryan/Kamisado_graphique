@@ -1,7 +1,10 @@
 package boardifier.control;
 
 import boardifier.model.*;
-import boardifier.view.*;
+import boardifier.view.ContainerLook;
+import boardifier.view.ElementLook;
+import boardifier.view.GameStageView;
+import boardifier.view.View;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -25,7 +28,7 @@ public abstract class Controller {
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
-        controlAnimation = new ControllerAnimation(model,view, this);
+        controlAnimation = new ControllerAnimation(model, view, this);
         firstStageName = "";
         inUpdate = false;
         frameNumber = 0;
@@ -68,7 +71,7 @@ public abstract class Controller {
      */
     protected void startStage(String stageName) throws GameException {
         if (model.isStageStarted()) stopGame();
-        Logger.trace("START STAGE "+stageName);
+        Logger.trace("START STAGE " + stageName);
 
         // create the model of the stage by using the StageFactory
         GameStageModel gameStageModel = StageFactory.createStageModel(stageName, model);
@@ -84,7 +87,7 @@ public abstract class Controller {
 
         // create a map of GameElement <-> ElementLook, that helps the controller in its update() method
         mapElementLook = new HashMap<>();
-        for(GameElement element : gameStageModel.getElements()) {
+        for (GameElement element : gameStageModel.getElements()) {
             ElementLook look = gameStageView.getElementLook(element);
             mapElementLook.put(element, look);
         }
@@ -119,10 +122,10 @@ public abstract class Controller {
     private void processContainerEvents() {
 
         // for each element : process all event and then update
-        mapElementLook.forEach((k,v) -> {
+        mapElementLook.forEach((k, v) -> {
             // proceed events that are only manageable by the controller
             EventQueue queue = k.getEventQueue();
-            for (int i=0;i<queue.getSize();i++) {
+            for (int i = 0; i < queue.getSize(); i++) {
                 Event e = queue.getEvent(i);
                 if (e.isOutContainerEvent()) {
                     queue.removeEvent(i--);
@@ -154,7 +157,7 @@ public abstract class Controller {
 
     private void updateElements() {
         // for each element : process all event and then update
-        mapElementLook.forEach((k,v) -> {
+        mapElementLook.forEach((k, v) -> {
             // update the model of the element, in case of there is really something to do (see comment before GameElement.update())
             k.update();
         });
@@ -163,25 +166,22 @@ public abstract class Controller {
     private void processLookEvents() {
 
         // for each element : process all event and then update
-        mapElementLook.forEach((k,v) -> {
+        mapElementLook.forEach((k, v) -> {
             // proceed events that are only manageable by the controller
             EventQueue queue = k.getEventQueue();
 
-            for (int i=0;i<queue.getSize();i++) {
+            for (int i = 0; i < queue.getSize(); i++) {
                 Event e = queue.getEvent(i);
                 if (e.isLocationEvent()) {
                     queue.removeEvent(i--);
                     v.onLocationChange();
-                }
-                else if (e.isVisibilityEvent()) {
+                } else if (e.isVisibilityEvent()) {
                     queue.removeEvent(i--);
                     v.onVisibilityChange();
-                }
-                else if (e.isSelectionEvent()) {
+                } else if (e.isSelectionEvent()) {
                     queue.removeEvent(i--);
                     v.onSelectionChange();
-                }
-                else if (e.isFaceEvent()) {
+                } else if (e.isFaceEvent()) {
                     queue.removeEvent(i--);
                     v.onFaceChange();
                 }
@@ -204,7 +204,8 @@ public abstract class Controller {
      * By default, this method does nothing because what to do is totally dependent of the game and its state.
      * For some, a new player can play, and for toehrs, the current player may play another turn.
      */
-    public void endOfTurn() {}
+    public void endOfTurn() {
+    }
 
     /**
      * Execute actions at the end of the game.
@@ -217,8 +218,7 @@ public abstract class Controller {
         String message = "";
         if (model.getIdWinner() != -1) {
             message = model.getPlayers().get(model.getIdWinner()).getName() + " wins";
-        }
-        else {
+        } else {
             message = "Draw game";
         }
         // disable all events
@@ -253,8 +253,7 @@ public abstract class Controller {
                 e.printStackTrace();
                 System.exit(1);
             }
-        }
-        else {
+        } else {
             System.err.println("Abnormal case: dialog closed with not choice");
             System.exit(1);
         }
@@ -265,12 +264,12 @@ public abstract class Controller {
      * This method MUST NOT BE called directly, and is only called by the ControllerAnimation
      * at each frame. It is used to update the model and then the view.
      * It must be noticed that the process of updating follows a fixed scheme :
-     *   - update all game element of the current game stage,
-     *   - update the grid cell of element that are in a grid and that have moved in space, and thus may have changed of cell,
-     *   - update the looks of all elements, calling dedicated methods according the type indicators of change (location, look, selection, ...),
-     *   - reset the change indicators in elements,
-     *   - check if the sage is finished,
-     *   - check if the game is finished.
+     * - update all game element of the current game stage,
+     * - update the grid cell of element that are in a grid and that have moved in space, and thus may have changed of cell,
+     * - update the looks of all elements, calling dedicated methods according the type indicators of change (location, look, selection, ...),
+     * - reset the change indicators in elements,
+     * - check if the sage is finished,
+     * - check if the game is finished.
      */
     public void update() {
         if (inUpdate) {
@@ -289,12 +288,14 @@ public abstract class Controller {
 
         if (model.isEndStage()) {
             controlAnimation.stopAnimation();
-            Platform.runLater( () -> {
-                stopStage();});
-        }
-        else if (model.isEndGame()) {
+            Platform.runLater(() -> {
+                stopStage();
+            });
+        } else if (model.isEndGame()) {
             controlAnimation.stopAnimation();
-            Platform.runLater( () -> {endGame();});
+            Platform.runLater(() -> {
+                endGame();
+            });
         }
 
         inUpdate = false;
@@ -306,16 +307,16 @@ public abstract class Controller {
 
     /**
      * Get the look of a given element
+     *
      * @param element the element for which the look is asked.
      * @return an ElementLook object that is the look of the element
-     *
      */
     public ElementLook getElementLook(GameElement element) {
         return mapElementLook.get(element);
     }
 
     public void removeElementLookFromContainerLookCell(ContainerElement container, ElementLook look, int row, int col) {
-        Logger.trace(frameNumber+" - remove element look ["+look+" ] from "+row+","+col);
+        Logger.trace(frameNumber + " - remove element look [" + look + " ] from " + row + "," + col);
         // get the container look from the container element where the element was removed
         ContainerLook containerLook = (ContainerLook) getElementLook(container);
         // add the look of the element to the inner looks of the container look =>
@@ -325,7 +326,7 @@ public abstract class Controller {
 
     public void putElementLookToContainerLookCell(ContainerElement container, ElementLook look, int row, int col) {
 
-        Logger.trace(frameNumber+" - put element look ["+look+"] in "+row+","+col);
+        Logger.trace(frameNumber + " - put element look [" + look + "] in " + row + "," + col);
         // get the look of the container element
         ContainerLook containerLook = (ContainerLook) getElementLook(container);
         // add the look of the element to the inner looks of the container look =>
@@ -334,7 +335,7 @@ public abstract class Controller {
     }
 
     public void moveElementLookToContainerLookCell(GameElement element, ElementLook look, int rowSrc, int colSrc, int rowDest, int colDest) {
-        Logger.trace(frameNumber+" - move element look ["+look+"] from "+rowSrc+","+colSrc+ " to "+rowDest+","+colDest);
+        Logger.trace(frameNumber + " - move element look [" + look + "] from " + rowSrc + "," + colSrc + " to " + rowDest + "," + colDest);
         // NB: element may have been removed from a container but not put in another one
         // in this case, do nothing
         if (element.getContainer() == null) return;
@@ -347,12 +348,13 @@ public abstract class Controller {
 
     /**
      * Get all visible and clickable elements that are at a given point in the scene coordinate space.
+     *
      * @param point the coordinate of a point
      * @return A list of game element
      */
     public List<GameElement> elementsAt(Coord2D point) {
         List<GameElement> list = new ArrayList<>();
-        for(GameElement element : model.getElements()) {
+        for (GameElement element : model.getElements()) {
             if ((element.isVisible()) && (element.isClickable())) {
                 ElementLook look = mapElementLook.get(element);
                 if ((look != null) && (look.isPointWithin(point))) {
