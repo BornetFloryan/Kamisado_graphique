@@ -16,6 +16,17 @@ import java.util.Random;
 
 public class K_SmartDecider extends Decider {
     private static final Random loto = new Random(Calendar.getInstance().getTimeInMillis());
+    private static final List<int[]> winingMoveX = new ArrayList<>();
+    private static final List<int[]> winingMoveO = new ArrayList<>();
+
+
+    static {
+        for (int i = 0; i < 8; i++) {
+            winingMoveX.add(new int[]{i, 0});
+            winingMoveO.add(new int[]{i, 7});
+        }
+    }
+
 
     public K_SmartDecider(Model model, Controller controller) {
         super(model, controller);
@@ -43,7 +54,12 @@ public class K_SmartDecider extends Decider {
         int fromY = board.getPawnGridCoordinate(pawn.getX(), board.getNbRows());
 
         addToTreeAllValidMoves(board.getReachableCells(), tree);
-        setLoosingMove(stage, board, fromX, fromY);
+        setLoosingMove(stage, board, fromX, fromY, tree);
+
+
+        System.out.println("Tree:");
+        tree.displayTree();
+
 
         Node nodeTo = tree.getMaxTo();
 
@@ -99,24 +115,95 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setLoosingMove(KamisadoStageModel stage, HoleBoard board, int fromX, int fromY) {
+    private void setLoosingMove(KamisadoStageModel stage, HoleBoard board, int fromX, int fromY, Tree tree) {
         MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board);
         List<Integer[]> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
-
-        System.out.println("From: " + fromX + " " + fromY);
 
         for (Integer[] move : validMoveCurrentPlayer) {
             MinimalBoard[][] minimalBoard = cloneMinimalBoard(minimalBoardBase);
             int row = move[0];
             int col = move[1];
 
-            minimalBoard[col][row] = minimalBoardBase[fromY][fromX];
-            minimalBoard[fromY][fromX] = new MinimalBoard('N', null);
 
-            String moveColorLock = minimalBoard[col][row].getColor();
-            String enemyName = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? model.getPlayers().get(1).getName() : model.getPlayers().get(0).getName();
-//            int[] coordPawnEnemy = findPawnFrom(minimalBoardBase, moveColorLock, enemyName);
+            minimalBoard[row][col] = minimalBoardBase[fromX][fromY];
+            minimalBoard[fromX][fromY] = new MinimalBoard('N', null);
+
+            String moveColorLock = minimalBoard[row][col].getColor();
+            char enemyName = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? 'O' : 'X';
+            int[] coordPawnEnemy = findPawnFrom(minimalBoardBase, moveColorLock, enemyName);
+
+
+            List<Integer[]> enemyValidMove = getValidCellsMove(minimalBoard, coordPawnEnemy[1], coordPawnEnemy[0], enemyName);
+
+
+            System.out.println("winingMoveX:");
+            for (int[] winingMove : winingMoveX) {
+                System.out.println("\t" + winingMove[0] + " " + winingMove[1]);
+            }
+
+            System.out.println("winingMoveO:");
+            for (int[] winingMove : winingMoveO) {
+                System.out.println("\t" + winingMove[0] + " " + winingMove[1]);
+            }
+
+
+            for (Integer[] enemyMove : enemyValidMove) {
+                int[] to = new int[]{enemyMove[0], enemyMove[1]};
+                System.out.println("to = " + to[0] + " " + to[1]);
+                if (winingMoveX.contains(to) || winingMoveO.contains(to)) {
+                    tree.add(-50, to);
+                }
+            }
         }
+    }
+
+    private List<Integer[]> getValidCellsMove(MinimalBoard[][] minimalBoard, int row, int col, char playerName) {
+        List<Integer[]> lst = new ArrayList<>();
+        int[][] directions = playerName == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {1, 1}, {-1, 1}};
+
+        for (int[] dir : directions) {
+            int dx = dir[0], dy = dir[1];
+            int x = row + dx, y = col + dy;
+
+
+
+            while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+                if (minimalBoard[y][x].getSymbol() == 'N') {
+                    lst.add(new Integer[]{x, y});
+                } else {
+                    break;
+                }
+                x += dx;
+                y += dy;
+            }
+        }
+
+        return lst;
+    }
+
+    private int[] findPawnFrom(MinimalBoard[][] minimalBoard, String color, char playerName) {
+        for (int i = 0; i < minimalBoard.length; i++) {
+            for (int j = 0; j < minimalBoard[i].length; j++) {
+
+
+                if (minimalBoard[i][j].getSymbol() == 'N' || minimalBoard[i][j].getColor() == null) {
+                    continue;
+                }
+
+//                System.out.println("------------------------------------------------------------------------------------------------");
+//                System.out.println("minimalBoard[i][j].getSymbol() = " + minimalBoard[i][j].getSymbol());
+//                System.out.println("minimalBoard[i][j].getColor() = " + minimalBoard[i][j].getColor());
+//                System.out.println("minimalBoard[i][j].getSymbol() == playerName = " + (minimalBoard[i][j].getSymbol() == playerName));
+//                System.out.println("Color = " + color);
+//                System.out.println("minimalBoard[i][j].getColor().equals(color) = " + minimalBoard[i][j].getColor().equals(color));
+//                System.out.println("------------------------------------------------------------------------------------------------");
+
+                if (minimalBoard[i][j].getColor().equals(color) && minimalBoard[i][j].getSymbol() == playerName) {
+                    return new int[]{j, i};
+                }
+            }
+        }
+        return null;
     }
 
     private List<Integer[]> getValidCurrentPlayerMove(HoleBoard board) {
