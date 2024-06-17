@@ -2,13 +2,10 @@ package model;
 
 import boardifier.model.Model;
 import boardifier.model.TextElement;
-import boardifier.view.RootPane;
-import boardifier.view.View;
 import control.ControllerHoleMouse;
 import control.KamisadoController;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import view.K_Color;
@@ -22,17 +19,14 @@ public class UnitTestKamisadoStageFactory {
     private String[] defaultXpawnsColor = {K_Color.BROWN, K_Color.GREEN, K_Color.RED, K_Color.YELLOW, K_Color.PINK, K_Color.PURPLE, K_Color.BLUE, K_Color.ORANGE};
     private String[] defaultOpawnsColor = {K_Color.ORANGE, K_Color.BLUE, K_Color.PURPLE, K_Color.PINK, K_Color.YELLOW, K_Color.RED, K_Color.GREEN, K_Color.BROWN};
     private Model model;
-    private Stage stage;
-    private RootPane rootPane;
-    private View view;
     private KamisadoStageModel stageModel;
     private KamisadoStageFactory stageFactory;
     private HoleBoard board;
     private KamisadoController controller;
     private ControllerHoleMouse controllerHoleMouse;
     private TextElement text;
-    private int width = 800;
-    private int height = 800;
+    private double width = 1920;
+    private double height = 1080;
 
 
     @BeforeEach
@@ -51,7 +45,7 @@ public class UnitTestKamisadoStageFactory {
                 stageFactory = new KamisadoStageFactory(stageModel, width, height);
                 stageFactory.setup();
 
-                board = (HoleBoard) stageModel.getBoard();
+                board = stageModel.getBoard();
             } finally {
                 latch.countDown();
             }
