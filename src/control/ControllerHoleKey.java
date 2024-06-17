@@ -3,6 +3,7 @@ package control;
 import boardifier.control.Controller;
 import boardifier.control.ControllerKey;
 import boardifier.control.Logger;
+import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.view.View;
 import javafx.event.*;
@@ -30,6 +31,15 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
 
             if (event.getCode() == KeyCode.ESCAPE) {
                 System.exit(0);
+            }
+
+            if (event.isControlDown() && event.getCode() == KeyCode.R) {
+                try {
+                    control.startGame();
+                    view.getStage().setFullScreen(true);
+                } catch (GameException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

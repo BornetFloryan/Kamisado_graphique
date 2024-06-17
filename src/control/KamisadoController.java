@@ -32,6 +32,14 @@ public class KamisadoController extends Controller {
 
         stageModel.computePartyResult();
 
+        if (play != null) {
+            try {
+                play.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
             // Use the default method to compute next player
             model.setNextPlayer();
@@ -39,6 +47,11 @@ public class KamisadoController extends Controller {
             // Get the new player
             Player p = model.getCurrentPlayer();
             stageModel.getPlayerName().setText(p.getName());
+
+            if (p.getType() == Player.HUMAN) {
+                ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(stageModel, stageModel.getBoard(), model.getCurrentPlayer());
+            }
+
         }
 
         play();

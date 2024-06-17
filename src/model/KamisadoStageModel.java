@@ -128,8 +128,6 @@ public class KamisadoStageModel extends GameStageModel {
     }
 
     public Pawn searchPawnFromLockedColor() {
-        System.out.println("Locked color: " + lockedColor);
-
         Pawn[] pawns;
 
         if (getCurrentPlayerName().equals(model.getPlayers().get(0).getName())) {

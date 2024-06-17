@@ -86,8 +86,8 @@ public class HoleBoard extends ContainerElement {
         return stage.getCurrentPlayerName().equals(stage.getModel().getPlayers().get(0).getName());
     }
 
-    private int getPawnGridCoordinate(double coordinate, int gridSize) {
-        return (int) (coordinate / (600f / gridSize));
+    public int getPawnGridCoordinate(double coordinate, int gridSize) {
+        return (int) (coordinate / (560f / gridSize));
     }
 
     private boolean isWithinBounds(int x, int y) {
