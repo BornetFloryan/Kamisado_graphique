@@ -32,8 +32,10 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         System.out.println("Mouse clicked at: (" + clickPosition.getX() + ", " + clickPosition.getY() + "), elements: " + clickedElements);
 
+
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         HoleBoard board = stageModel.getBoard();
+        System.out.println("VRAI BOARD" + board);
 
 //        if (stageModel.getLockedColor() != null) setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
 
