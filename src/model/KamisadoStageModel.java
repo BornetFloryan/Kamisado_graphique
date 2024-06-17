@@ -25,6 +25,8 @@ public class KamisadoStageModel extends GameStageModel {
     private TextElement playerName;
     private String lockedColor = null;
 
+    private int[] tagret = new int[2];
+
     public KamisadoStageModel(String name, Model model) {
         super(name, model);
 
@@ -176,5 +178,12 @@ public class KamisadoStageModel extends GameStageModel {
         return minimalBoardBase;
     }
 
+    public void setTarget(int x, int y) {
+        tagret[0] = x;
+        tagret[1] = y;
+    }
 
+    public int[] getTarget() {
+        return tagret;
+    }
 }

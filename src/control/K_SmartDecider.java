@@ -39,8 +39,11 @@ public class K_SmartDecider extends Decider {
 
         board.setValidCells(pawn);
 
+        int fromX = board.getPawnGridCoordinate(pawn.getY(), board.getNbCols());
+        int fromY = board.getPawnGridCoordinate(pawn.getX(), board.getNbRows());
+
         addToTreeAllValidMoves(board.getReachableCells(), tree);
-        setLoosingMove(stage, board);
+        setLoosingMove(stage, board, fromX, fromY);
 
         Node nodeTo = tree.getMaxTo();
 
@@ -55,6 +58,8 @@ public class K_SmartDecider extends Decider {
 
         if (to == null) {
             return null;
+        } else {
+            Logger.debug("Move from " + fromX + " " + fromY + " to " + to[0] + " " + to[1]);
         }
 
 
@@ -94,17 +99,24 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setLoosingMove(KamisadoStageModel stage, HoleBoard board) {
+    private void setLoosingMove(KamisadoStageModel stage, HoleBoard board, int fromX, int fromY) {
         MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board);
         List<Integer[]> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
 
+        System.out.println("From: " + fromX + " " + fromY);
 
-        System.out.println("validMoveCurrentPlayer:");
         for (Integer[] move : validMoveCurrentPlayer) {
-            System.out.println(move[0] + " " + move[1]);
-        }
+            MinimalBoard[][] minimalBoard = cloneMinimalBoard(minimalBoardBase);
+            int row = move[0];
+            int col = move[1];
 
-        displayBoard(minimalBoardBase);
+            minimalBoard[col][row] = minimalBoardBase[fromY][fromX];
+            minimalBoard[fromY][fromX] = new MinimalBoard('N', null);
+
+            String moveColorLock = minimalBoard[col][row].getColor();
+            String enemyName = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? model.getPlayers().get(1).getName() : model.getPlayers().get(0).getName();
+//            int[] coordPawnEnemy = findPawnFrom(minimalBoardBase, moveColorLock, enemyName);
+        }
     }
 
     private List<Integer[]> getValidCurrentPlayerMove(HoleBoard board) {
@@ -118,6 +130,16 @@ public class K_SmartDecider extends Decider {
             }
         }
         return validMoveCurrentPlayer;
+    }
+
+    private MinimalBoard[][] cloneMinimalBoard(MinimalBoard[][] minimalBoardBase) {
+        MinimalBoard[][] minimalBoard = new MinimalBoard[minimalBoardBase.length][minimalBoardBase[0].length];
+        for (int i = 0; i < minimalBoardBase.length; i++) {
+            for (int j = 0; j < minimalBoardBase[i].length; j++) {
+                minimalBoard[i][j] = minimalBoardBase[i][j];
+            }
+        }
+        return minimalBoard;
     }
 
 

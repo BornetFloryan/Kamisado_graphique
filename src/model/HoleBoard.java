@@ -30,17 +30,6 @@ public class HoleBoard extends ContainerElement {
         addChangeFaceEvent();
     }
 
-    public void setValidCells() {
-        resetReachableCells(false);
-        List<Point> validCells = computeValidCells();
-        if (validCells != null) {
-            for (Point p : validCells) {
-                reachableCells[p.y][p.x] = true;
-            }
-        }
-        addChangeFaceEvent();
-    }
-
     public List<Point> computeValidCells(Pawn pawn) {
         KamisadoStageModel stage = (KamisadoStageModel) gameStageModel;
         List<Point> validCells = new ArrayList<>();
@@ -64,12 +53,6 @@ public class HoleBoard extends ContainerElement {
         }
 
         return validCells;
-    }
-
-    public List<Point> computeValidCells() {
-        KamisadoStageModel stage = (KamisadoStageModel) gameStageModel;
-        Pawn lockedColorPawn = stage.searchPawnFromLockedColor();
-        return computeValidCells(lockedColorPawn);
     }
 
     private int[][] getPlayerDirections(KamisadoStageModel stage) {
