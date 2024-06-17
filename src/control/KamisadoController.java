@@ -10,6 +10,7 @@ import boardifier.model.Player;
 import boardifier.view.View;
 import model.AISelector;
 import model.KamisadoStageModel;
+import model.Pawn;
 
 public class KamisadoController extends Controller {
     private Thread play;
@@ -47,11 +48,6 @@ public class KamisadoController extends Controller {
             // Get the new player
             Player p = model.getCurrentPlayer();
             stageModel.getPlayerName().setText(p.getName());
-
-            if (p.getType() == Player.HUMAN) {
-                ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(stageModel, stageModel.getBoard(), model.getCurrentPlayer());
-            }
-
         }
 
         play();
@@ -76,7 +72,14 @@ public class KamisadoController extends Controller {
             play.start();
         } else {
             Logger.debug("PLAYER PLAYS");
-            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
+
+            KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+            Pawn pawn = stageModel.searchPawnFromLockedColor();
+
+            if (pawn != null) {
+                ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(pawn);
+
+            }
         }
     }
 }
