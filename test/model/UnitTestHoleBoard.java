@@ -5,21 +5,23 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import view.K_Color;
 
 import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UnitTestHoleBoard {
     private Model model;
     private KamisadoStageModel stageModel;
     private KamisadoStageFactory stageFactory;
     private HoleBoard board;
-    private int width = 800;
-    private int height = 800;
+    private int width = 1920;
+    private int height = 1080;
+    private Pawn pawn;
+    private List<Point> valid;
 
     @BeforeEach
     void setUp(){
@@ -37,7 +39,7 @@ public class UnitTestHoleBoard {
                 stageFactory = new KamisadoStageFactory(stageModel, width, height);
                 stageFactory.setup();
 
-                board = (HoleBoard) stageModel.getBoard();
+                board = stageModel.getBoard();
             } finally {
                 latch.countDown();
             }
@@ -55,9 +57,9 @@ public class UnitTestHoleBoard {
         assertNotNull(XPawns);
         assertEquals(8, XPawns.length);
         for (int i = 0; i < 8; i++) {
-            Pawn pawn = XPawns[i];
+            pawn = XPawns[i];
             board.setValidCells(pawn);
-            List<Point> valid = board.computeValidCells(pawn);
+            valid = board.computeValidCells(pawn);
             assertNotNull(valid);
         }
 
@@ -65,10 +67,15 @@ public class UnitTestHoleBoard {
         assertNotNull(OPawns);
         assertEquals(8, OPawns.length);
         for (int i = 0; i < 8; i++) {
-            Pawn pawn = OPawns[i];
+            pawn = OPawns[i];
             board.setValidCells(pawn);
-            List<Point> valid = board.computeValidCells(pawn);
+            valid = board.computeValidCells(pawn);
             assertNotNull(valid);
         }
+
+        pawn = new Pawn(K_Color.BLACK, 'T', stageModel);
+        pawn.setLocation(100, 5400);
+        valid = board.computeValidCells(pawn);
+        assertTrue(valid.isEmpty());
     }
 }
