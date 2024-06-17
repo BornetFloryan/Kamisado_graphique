@@ -6,6 +6,7 @@ import control.ControllerHoleMouse;
 import control.KamisadoController;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.stage.Screen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import view.K_Color;
@@ -25,8 +26,8 @@ public class UnitTestKamisadoStageFactory {
     private KamisadoController controller;
     private ControllerHoleMouse controllerHoleMouse;
     private TextElement text;
-    private double width = 1920;
-    private double height = 1080;
+    private double width;
+    private double height;
 
 
     @BeforeEach
@@ -37,6 +38,9 @@ public class UnitTestKamisadoStageFactory {
 
         Platform.runLater(() -> {
             try {
+                width = Screen.getPrimary().getBounds().getWidth();
+                height = Screen.getPrimary().getBounds().getHeight();
+
                 model = new Model();
                 model.addHumanPlayer("Player X");
                 model.addComputerPlayer("Computer O");

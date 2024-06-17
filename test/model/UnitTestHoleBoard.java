@@ -3,6 +3,7 @@ package model;
 import boardifier.model.Model;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.stage.Screen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import view.K_Color;
@@ -18,8 +19,8 @@ public class UnitTestHoleBoard {
     private KamisadoStageModel stageModel;
     private KamisadoStageFactory stageFactory;
     private HoleBoard board;
-    private int width = 1920;
-    private int height = 1080;
+    private double width;
+    private double height;
     private Pawn pawn;
     private List<Point> valid;
 
@@ -31,6 +32,9 @@ public class UnitTestHoleBoard {
 
         Platform.runLater(() -> {
             try {
+                width = Screen.getPrimary().getBounds().getWidth();
+                height = Screen.getPrimary().getBounds().getHeight();
+
                 model = new Model();
                 model.addHumanPlayer("Player X");
                 model.addComputerPlayer("Computer O");
