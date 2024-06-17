@@ -30,13 +30,10 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         Coord2D clickPosition = new Coord2D(event.getSceneX(), event.getSceneY());
         List<GameElement> clickedElements = control.elementsAt(clickPosition);
 
-        System.out.println("Mouse clicked at: (" + clickPosition.getX() + ", " + clickPosition.getY() + "), elements: " + clickedElements);
-
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         HoleBoard board = stageModel.getBoard();
 
-//        if (stageModel.getLockedColor() != null) setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
-
+        Logger.debug("Game state: " + stageModel.getState()); // Debug game state
 
         if (stageModel.getState() == KamisadoStageModel.STATE_SELECTPAWN && model.getLockedColor() == null) {
             Logger.debug("Selecting pawn");
@@ -55,6 +52,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
                 }
                 selectedPawn = (Pawn) element;
                 selectedPawn.toggleSelected(); // Select new pawn
+                Logger.debug("Selected pawn: " + selectedPawn + " with color: " + selectedPawn.getColor()); // Debug selected pawn
                 stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
                 board.setValidCells(selectedPawn);
                 return;
@@ -68,6 +66,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
                 resetSelection(board);
                 return;
             } else if (element.getType() == ElementTypes.getType("pawn") && stageModel.getLockedColor() == null) {
+                stageModel.setState(KamisadoStageModel.STATE_SELECTPAWN);
                 handleSelectPawnState(clickedElements, board, stageModel);
                 return;
             }
@@ -75,19 +74,17 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         if (selectedPawn == null) return; // If no pawn is selected, return
 
-        if (stageModel.getLockedColor() != null) {
-            setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
-        }
-
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
         int[] targetCell = lookBoard.getCellFromSceneLocation(clickPosition);
 
         if (targetCell != null && board.canReachCell(targetCell[0], targetCell[1])) {
-            // Get the color of the board cell
             String color = lookBoard.getColor(targetCell[0], targetCell[1]);
             stageModel.setLockedColor(color);
 
+            Logger.debug("Locked color set to: " + color); // Debug locked color
             performMoveAction(stageModel, targetCell);
+
+            setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
         }
     }
 
@@ -98,6 +95,13 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
     }
 
     public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board, Player player) {
+        Logger.debug("Setting pawn from locked color: " + stageModel.getLockedColor()); // Debug locked color
+
+        if (stageModel.getLockedColor() == null) return;
+
+        Pawn validPawn = stageModel.searchPawnFromLockedColor();
+        board.setValidCells(validPawn);
+
         Pawn[] pawns;
 
         if (player.getName().equals(stageModel.getModel().getPlayers().get(0).getName())) {
@@ -108,12 +112,16 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         String color = stageModel.getLockedColor();
 
+        KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
+
         for (Pawn pawn : pawns) {
             if (pawn.getColor().equals(color)) {
                 selectedPawn = pawn;
+                Logger.debug("Pawn selected: " + selectedPawn + " with color: " + color); // Debug pawn selection
                 selectedPawn.toggleSelected();
-                stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
                 board.setValidCells(selectedPawn);
+                stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
+                lookBoard.onFaceChange();
                 return;
             }
         }
@@ -127,19 +135,5 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         ActionPlayer actionPlayer = new ActionPlayer(model, control, actions);
         actionPlayer.start();
-    }
-
-    public void setPawnFromLockedColor(Pawn pawn) {
-        if (selectedPawn != null) selectedPawn.toggleSelected();
-
-        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
-
-        selectedPawn = pawn;
-        selectedPawn.toggleSelected();
-        selectedPawn = pawn;
-        selectedPawn.toggleSelected();
-        stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
-        board.setValidCells(selectedPawn);
     }
 }

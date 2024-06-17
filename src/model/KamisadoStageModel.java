@@ -147,12 +147,34 @@ public class KamisadoStageModel extends GameStageModel {
 
     public void computePartyResult() {
         if (isWin()) {
+            board.resetReachableCells(false);
             return;
         }
 
         if (isDraw()) {
+            board.resetReachableCells(false);
             model.setIdWinner(-1);
             model.stopGame();
         }
     }
+
+
+    public MinimalBoard[][] createMinimalBoard(HoleBoard board) {
+        MinimalBoard[][] minimalBoardBase = new MinimalBoard[board.getNbCols()][board.getNbRows()];
+        for (int i = 0; i < board.getNbCols(); i++) {
+            for (int j = 0; j < board.getNbRows(); j++) {
+                GameElement element = board.getElement(i, j);
+
+                if (element instanceof Pawn) {
+                    Pawn pawn = (Pawn) element;
+                    minimalBoardBase[i][j] = new MinimalBoard(pawn.getSymbol(), pawn.getColor());
+                } else {
+                    minimalBoardBase[i][j] = new MinimalBoard('N', null);
+                }
+            }
+        }
+        return minimalBoardBase;
+    }
+
+
 }

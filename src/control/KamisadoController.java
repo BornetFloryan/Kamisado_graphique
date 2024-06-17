@@ -1,17 +1,16 @@
 package control;
 
-import boardifier.control.*;
-import boardifier.model.*;
+import boardifier.control.ActionPlayer;
+import boardifier.control.Controller;
+import boardifier.control.Decider;
+import boardifier.control.Logger;
+import boardifier.model.GameException;
+import boardifier.model.Model;
+import boardifier.model.Player;
 import boardifier.view.View;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import model.AISelector;
 import model.HoleBoard;
 import model.KamisadoStageModel;
-import model.Pawn;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class KamisadoController extends Controller {
     private Thread play;
@@ -31,15 +30,10 @@ public class KamisadoController extends Controller {
     @Override
     public void endOfTurn() {
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
-
         stageModel.computePartyResult();
 
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
-            // Use the default method to compute next player
             model.setNextPlayer();
-
-            // Get the new player
             Player p = model.getCurrentPlayer();
             stageModel.getPlayerName().setText(p.getName());
         }
@@ -53,9 +47,6 @@ public class KamisadoController extends Controller {
         if (model.isEndGame()) {
             return;
         }
-
-        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
 
         if (p.getType() == Player.COMPUTER) {
             Logger.debug("COMPUTER PLAYS");
@@ -71,8 +62,8 @@ public class KamisadoController extends Controller {
             play.start();
         } else {
             Logger.debug("PLAYER PLAYS");
-
-            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
         }
+
+        ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
     }
 }
