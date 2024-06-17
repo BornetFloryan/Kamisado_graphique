@@ -8,14 +8,13 @@ import boardifier.view.View;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.HoleBoard;
 import model.KamisadoStageModel;
-import model.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import javafx.application.Platform;
 import org.junit.jupiter.api.Test;
-import view.K_Color;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -33,12 +32,12 @@ public class UnitTestControllerHoleMouse {
     double y;
     private KamisadoStageModel stageModel;
     private GameElement element;
-    private double width = 1920;
-    private double height = 1080;
-    private double boardWidth = width * 0.8 ;
-    private double boardHeight = height * 0.9;
-    private double boardX = (width - boardWidth) / 2;
-    private double boardY = (height - boardHeight) / 2;
+    private double width;
+    private double height;
+    private double boardWidth;
+    private double boardHeight;
+    private double boardX;
+    private double boardY;
 
     @BeforeEach
     void setUp() {
@@ -48,6 +47,15 @@ public class UnitTestControllerHoleMouse {
 
         Platform.runLater(() -> {
             try {
+                width = Screen.getPrimary().getBounds().getWidth();
+                height = Screen.getPrimary().getBounds().getHeight();
+
+                boardWidth = width * 0.8;
+                boardHeight = height * 0.9;
+
+                boardX = (width - boardWidth) / 2;
+                boardY = (height - boardHeight) / 2;
+
                 model = new Model();
                 stage = new Stage();
                 rootPane = new RootPane();
@@ -88,13 +96,17 @@ public class UnitTestControllerHoleMouse {
 
         board = stageModel.getBoard();
 
+        System.out.println("BoardWidth: " + boardWidth);
+        System.out.println("BoardHeight: " + boardHeight);
+        System.out.println("BoardX: " + boardX);
+        System.out.println("BoardY: " + boardY);
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 element = board.getElement(i, j);
                 if (element != null) {
-                    x = element.getX() + boardY - 35;
-                    y = element.getY() + boardX - 35;
+                    x = element.getX() + boardY;
+                    y = element.getY() + boardX;
 
                     model.setCaptureMouseEvent(false);
 
@@ -122,8 +134,8 @@ public class UnitTestControllerHoleMouse {
         element = board.getElement(7, 0);
         element.getGameStage().setState(1);
 
-        x = element.getX() + boardY - 35;
-        y = element.getY() + boardX - 35;
+        x = element.getX() + boardY;
+        y = element.getY() + boardX;
 
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
@@ -131,8 +143,8 @@ public class UnitTestControllerHoleMouse {
         controllerHoleMouse.handle(event);
 
         //Move Pawn location
-        x = element.getX() + boardY - 35;
-        y = element.getY() + boardX - 105;
+        x = element.getX() + boardY;
+        y = element.getY() + boardX - 70;
 
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
@@ -154,8 +166,8 @@ public class UnitTestControllerHoleMouse {
         element = board.getElement(0, 2);
         element.getGameStage().setState(1);
 
-        x = element.getX() + boardY - 35;
-        y = element.getY() + boardX - 35;
+        x = element.getX() + boardY;
+        y = element.getY() + boardX;
 
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
@@ -163,8 +175,8 @@ public class UnitTestControllerHoleMouse {
         controllerHoleMouse.handle(event);
 
         //Move Pawn location
-        x = element.getX() + boardY - 35;
-        y = element.getY() + boardX + 35;
+        x = element.getX() + boardY;
+        y = element.getY() + boardX + 70;
 
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
@@ -172,3 +184,4 @@ public class UnitTestControllerHoleMouse {
         controllerHoleMouse.handle(event);
     }
 }
+
