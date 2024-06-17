@@ -11,7 +11,10 @@ import model.KamisadoStageModel;
 import model.Pawn;
 import view.KamisadoBoardLook;
 
+
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A mouse controller that handles mouse clicks, selects pawns, and moves them.
@@ -96,7 +99,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
     public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board, Player player) {
         Logger.debug("Setting pawn from locked color: " + stageModel.getLockedColor()); // Debug locked color
-
+        System.out.println(stageModel.getLockedColor());
         if (stageModel.getLockedColor() == null) return;
 
         Pawn validPawn = stageModel.searchPawnFromLockedColor();
@@ -112,8 +115,6 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         String color = stageModel.getLockedColor();
 
-        KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
-
         for (Pawn pawn : pawns) {
             if (pawn.getColor().equals(color)) {
                 selectedPawn = pawn;
@@ -121,7 +122,6 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
                 selectedPawn.toggleSelected();
                 board.setValidCells(selectedPawn);
                 stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
-                lookBoard.onFaceChange();
                 return;
             }
         }
@@ -130,6 +130,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
     private void performMoveAction(KamisadoStageModel stageModel, int[] targetCell) {
         ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, selectedPawn, targetCell[0], targetCell[1]);
         actions.setDoEndOfTurn(true);
+        selectedPawn.setLocation(targetCell[0], targetCell[1]);
 
         resetSelection(stageModel.getBoard());
 
