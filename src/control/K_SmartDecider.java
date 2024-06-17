@@ -41,7 +41,7 @@ public class K_SmartDecider extends Decider {
         for (int i = 0; i < validCells.length; i++) {
             for (int j = 0; j < validCells[i].length; j++) {
                 if (validCells[i][j]) {
-                    int[] to = new int[] {j, i};
+                    int[] to = new int[] {i, j};
                     tree.add(loto.nextInt(-10, 10), to);
                 }
             }
@@ -59,7 +59,7 @@ public class K_SmartDecider extends Decider {
         stage.setLockedColor(color);
 
 
-        ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[1], to[0]);
+        ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
 
         action.setDoEndOfTurn(true);
 

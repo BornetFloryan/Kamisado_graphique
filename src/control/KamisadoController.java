@@ -33,13 +33,13 @@ public class KamisadoController extends Controller {
 
         stageModel.computePartyResult();
 
-        if (play != null) {
-            try {
-                play.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (play != null) {
+//            try {
+//                play.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
             // Use the default method to compute next player
