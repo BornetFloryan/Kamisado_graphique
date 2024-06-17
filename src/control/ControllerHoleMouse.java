@@ -1,9 +1,6 @@
 package control;
 
-import boardifier.control.ActionFactory;
-import boardifier.control.ActionPlayer;
-import boardifier.control.Controller;
-import boardifier.control.ControllerMouse;
+import boardifier.control.*;
 import boardifier.model.*;
 import boardifier.model.action.ActionList;
 import boardifier.view.View;
@@ -33,14 +30,19 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         Coord2D clickPosition = new Coord2D(event.getSceneX(), event.getSceneY());
         List<GameElement> clickedElements = control.elementsAt(clickPosition);
 
+        System.out.println("Mouse clicked at: (" + clickPosition.getX() + ", " + clickPosition.getY() + "), elements: " + clickedElements);
+
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         HoleBoard board = stageModel.getBoard();
 
 //        if (stageModel.getLockedColor() != null) setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
 
+
         if (stageModel.getState() == KamisadoStageModel.STATE_SELECTPAWN && model.getLockedColor() == null) {
+            Logger.debug("Selecting pawn");
             handleSelectPawnState(clickedElements, board, stageModel);
         } else if (stageModel.getState() == KamisadoStageModel.STATE_SELECTDEST) {
+            Logger.debug("Selecting destination");
             handleSelectDestState(clickedElements, board, stageModel, clickPosition);
         }
     }
@@ -60,7 +62,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         }
     }
 
-    private void handleSelectDestState(List<GameElement> clickedElements, HoleBoard board, KamisadoStageModel stageModel, Coord2D clickPosition) {
+    public void handleSelectDestState(List<GameElement> clickedElements, HoleBoard board, KamisadoStageModel stageModel, Coord2D clickPosition) {
         for (GameElement element : clickedElements) {
             if (element.isSelected() && stageModel.getLockedColor() == null) {
                 resetSelection(board);
@@ -115,7 +117,6 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
                 return;
             }
         }
-
     }
 
     private void performMoveAction(KamisadoStageModel stageModel, int[] targetCell) {

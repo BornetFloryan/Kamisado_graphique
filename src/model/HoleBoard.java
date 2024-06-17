@@ -87,7 +87,7 @@ public class HoleBoard extends ContainerElement {
     }
 
     public int getPawnGridCoordinate(double coordinate, int gridSize) {
-        return (int) (coordinate / (560f / gridSize));
+        return (int) (coordinate / (600f / gridSize));
     }
 
     private boolean isWithinBounds(int x, int y) {

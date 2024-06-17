@@ -1,16 +1,17 @@
 package control;
 
-import boardifier.control.ActionPlayer;
-import boardifier.control.Controller;
-import boardifier.control.Decider;
-import boardifier.control.Logger;
-import boardifier.model.GameException;
-import boardifier.model.Model;
-import boardifier.model.Player;
+import boardifier.control.*;
+import boardifier.model.*;
 import boardifier.view.View;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import model.AISelector;
+import model.HoleBoard;
 import model.KamisadoStageModel;
 import model.Pawn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KamisadoController extends Controller {
     private Thread play;
@@ -30,16 +31,9 @@ public class KamisadoController extends Controller {
     @Override
     public void endOfTurn() {
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        HoleBoard board = stageModel.getBoard();
 
         stageModel.computePartyResult();
-
-//        if (play != null) {
-//            try {
-//                play.join();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
             // Use the default method to compute next player
@@ -60,7 +54,12 @@ public class KamisadoController extends Controller {
             return;
         }
 
+        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        HoleBoard board = stageModel.getBoard();
+
         if (p.getType() == Player.COMPUTER) {
+            Logger.debug("COMPUTER PLAYS");
+
             Decider decider;
             if (AISelector.getDecider(model.getIdPlayer()).equals("Hard")) {
                 decider = new K_SmartDecider(model, this);
@@ -73,13 +72,7 @@ public class KamisadoController extends Controller {
         } else {
             Logger.debug("PLAYER PLAYS");
 
-            KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
-            Pawn pawn = stageModel.searchPawnFromLockedColor();
-
-            if (pawn != null) {
-                ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(pawn);
-
-            }
+            ((ControllerHoleMouse) controlMouse).setPawnFromLockedColor(stageModel, board, model.getCurrentPlayer());
         }
     }
 }

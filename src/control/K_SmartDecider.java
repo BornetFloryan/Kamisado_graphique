@@ -58,11 +58,9 @@ public class K_SmartDecider extends Decider {
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
-
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
 
         action.setDoEndOfTurn(true);
-
 
         return action;
     }
