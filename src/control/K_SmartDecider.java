@@ -5,7 +5,6 @@ import boardifier.control.Controller;
 import boardifier.control.Decider;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
-import boardifier.model.animation.AnimationTypes;
 import model.HoleBoard;
 import model.KamisadoStageModel;
 import model.Pawn;
@@ -13,9 +12,7 @@ import model.Tree;
 import view.KamisadoBoardLook;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
-import java.awt.Point;
 
 public class K_SmartDecider extends Decider {
     private static final Random loto = new Random(Calendar.getInstance().getTimeInMillis());
@@ -30,18 +27,6 @@ public class K_SmartDecider extends Decider {
         Tree tree = new Tree();
         Pawn pawn;
 
-        System.out.println("Pawn before decide:");
-        for (Pawn p : stage.getXPawns()) {
-            System.out.println("\tPawn symbol: " + p.getSymbol() + ", Pawn color: #" + p.getColor().substring(2) + ", Pawn from: (" + board.getPawnGridCoordinate(p.getX(), board.getNbRows()) + ", " + board.getPawnGridCoordinate(p.getY(), board.getNbCols()) + ")");
-        }
-        for (Pawn p : stage.getOPawns()) {
-            System.out.println("\tPawn symbol: " + p.getSymbol() + ", Pawn color: #" + p.getColor().substring(2) + ", Pawn from: (" + board.getPawnGridCoordinate(p.getX(), board.getNbRows()) + ", " + board.getPawnGridCoordinate(p.getY(), board.getNbCols()) + ")");
-        }
-
-
-
-
-
 
         if (stage.getLockedColor() == null) {
             Pawn[] pawns = stage.getXPawns();
@@ -50,12 +35,16 @@ public class K_SmartDecider extends Decider {
             pawn = stage.searchPawnFromLockedColor();
         }
 
-        List<Point> valid = board.computeValidCells(pawn);
+        board.setValidCells(pawn);
+        boolean[][] validCells = board.getReachableCells();
 
-        for (Point point : valid) {
-            int[] to = {point.x, point.y};
-
-            tree.add(loto.nextInt(-5, 20), to);
+        for (int i = 0; i < validCells.length; i++) {
+            for (int j = 0; j < validCells[i].length; j++) {
+                if (validCells[i][j]) {
+                    int[] to = new int[] {j, i};
+                    tree.add(loto.nextInt(-10, 10), to);
+                }
+            }
         }
 
         int[] to = tree.getMaxTo();
@@ -64,27 +53,15 @@ public class K_SmartDecider extends Decider {
             return null;
         }
 
-//        System.out.println("\tPawn symbol: " + pawn.getSymbol() + ", Pawn color: " + pawn.getColor() + ", Pawn from: (" + board.getPawnGridCoordinate(pawn.getX(), board.getNbRows()) + ", " + board.getPawnGridCoordinate(pawn.getY(), board.getNbCols()) + "), to: (" + to[0] + ", " + to[1] + ") color locked: " + stage.getLockedColor());
 
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
-//        System.out.println("Locked color to destination: " + color);
-
 
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[1], to[0]);
 
         action.setDoEndOfTurn(true);
-
-
-//        System.out.println("Pawn after decide:");
-//        for (Pawn p : stage.getXPawns()) {
-//            System.out.println("\tPawn symbol: " + p.getSymbol() + ", Pawn color: " + p.getColor() + ", Pawn from: (" + board.getPawnGridCoordinate(p.getX(), board.getNbRows()) + ", " + board.getPawnGridCoordinate(p.getY(), board.getNbCols()) + ")");
-//        }
-//        for (Pawn p : stage.getOPawns()) {
-//            System.out.println("\tPawn symbol: " + p.getSymbol() + ", Pawn color: " + p.getColor() + ", Pawn from: (" + board.getPawnGridCoordinate(p.getX(), board.getNbRows()) + ", " + board.getPawnGridCoordinate(p.getY(), board.getNbCols()) + ")");
-//        }
 
 
         return action;

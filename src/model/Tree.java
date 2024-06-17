@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Tree {
     private Node root;
@@ -11,6 +10,10 @@ public class Tree {
     }
 
     public void add(int value, int[] to) {
+        if (to == null || to.length != 2) {
+            throw new IllegalArgumentException("Array 'to' must have exactly two elements.");
+        }
+
         if (root == null) {
             root = new Node(value, to);
         } else {
@@ -50,15 +53,18 @@ public class Tree {
     }
 
     public void displayTree() {
+        if (root == null) {
+            System.out.println("Tree is empty.");
+            return;
+        }
         displayTreeRecursive(root);
     }
 
     private void displayTreeRecursive(Node node) {
         if (node != null) {
             displayTreeRecursive(node.getLeft());
-            System.out.println("Value: " + node.getValue() + ", to: [" + node.getTo()[0] + ", " + node.getTo()[1] + "]");
+            System.out.println("Value: " + node.getValue() + ", to: " + Arrays.toString(node.getTo()));
             displayTreeRecursive(node.getRight());
         }
     }
-
 }

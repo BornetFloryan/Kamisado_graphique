@@ -7,6 +7,10 @@ public class Node {
     private int[] to;
 
     public Node(int value, int[] to) {
+        if (to == null || to.length != 2) {
+            throw new IllegalArgumentException("Array 'to' must have exactly two elements.");
+        }
+
         this.value = value;
         this.to = to;
         this.left = null;
@@ -35,5 +39,12 @@ public class Node {
 
     public int[] getTo() {
         return to;
+    }
+
+    public void setTo(int[] to) {
+        if (to == null || to.length != 2) {
+            throw new IllegalArgumentException("Array 'to' must have exactly two elements.");
+        }
+        this.to = to;
     }
 }
