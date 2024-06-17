@@ -5,6 +5,8 @@ import boardifier.model.Model;
 import boardifier.view.View;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import view.K_DiagramsPane;
+import view.K_GameRulesPane;
 import view.K_HomeRootPane;
 import view.KamisadoView;
 
@@ -31,6 +33,14 @@ public class K_ControllerHowToPlay extends ControllerAction {
         if (event.getSource() == rootPane.getBackToHomeButton()) {
             view = new KamisadoView(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerMenueAction(model, view, (KamisadoController) control, stage));
+        }
+        else if (event.getSource() == rootPane.getGameRulesButton()) {
+            view = new KamisadoView(model, stage, new K_GameRulesPane(rootPane.getWidth(), rootPane.getHeight()));
+            control.setControlAction(new K_ControllerGamesRules(model, view, (KamisadoController) control, stage));
+        }
+        else if (event.getSource() == rootPane.getDiagramsButton()) {
+            view = new KamisadoView(model, stage, new K_DiagramsPane(rootPane.getWidth(), rootPane.getHeight()));
+            control.setControlAction(new K_ControllerDiagrams(model, view, (KamisadoController) control, stage));
         }
     }
 }

@@ -1,0 +1,34 @@
+package control;
+
+import boardifier.control.ControllerAction;
+import boardifier.model.Model;
+import boardifier.view.View;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+import view.K_HowToPlayPane;
+import view.KamisadoView;
+
+public class K_ControllerGamesRules extends ControllerAction {
+    private KamisadoView view;
+    private final view.K_GameRulesPane rootPane;
+    private final Stage stage;
+
+    public K_ControllerGamesRules(Model model, View view, KamisadoController control, Stage stage) {
+        super(model, view, control);
+        this.view = (KamisadoView) view;
+        this.stage = stage;
+
+        // get root pane
+        this.rootPane = (view.K_GameRulesPane) this.view.getRootPane();
+
+        this.rootPane.getBackToHowToPlayButton().setOnAction(this);
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+        if (event.getSource() == rootPane.getBackToHowToPlayButton()) {
+            view = new KamisadoView(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
+            control.setControlAction(new K_ControllerHowToPlay(model, view, (KamisadoController) control, stage));
+        }
+    }
+}
