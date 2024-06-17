@@ -1,9 +1,6 @@
 package control;
 
-import boardifier.control.ActionFactory;
-import boardifier.control.Controller;
-import boardifier.control.ControllerKey;
-import boardifier.control.Logger;
+import boardifier.control.*;
 import boardifier.model.GameElement;
 import boardifier.model.GameException;
 import boardifier.model.Model;
@@ -15,6 +12,7 @@ import javafx.stage.Screen;
 import model.HoleBoard;
 import model.KamisadoStageModel;
 import model.Pawn;
+import view.KamisadoBoardLook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,24 +58,53 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
 
 
                 List<String> actions = new ArrayList<>();
-                actions.add("D8");
                 actions.add("D3");
                 actions.add("E2");
                 actions.add("G7");
                 actions.add("A7");
                 actions.add("F1");
 
-                for (String action : actions) {
-                    int fromX = action.charAt(0) - 'A';
-                    int fromY = Character.getNumericValue(action.charAt(1)) - 1;
-                    System.out.println(fromX + ", " + fromY);
+                String fromDefault = "D8";
+                Pawn pawn = null;
 
-                    Pawn pawn = (Pawn) board.getElement(fromX, fromY);
+                for (int i = 0; i < actions.size(); i++) {
+                    if (fromDefault != null) {
+                        int fromX = fromDefault.charAt(0) - 'A';
+                        int fromY = fromDefault.charAt(1) - '1';
 
-                    int destX = action.charAt(0) - 'A';
-                    int destY = Character.getNumericValue(action.charAt(1)) - 1;
+                        GameElement element = board.getElement(fromY, fromX);
 
-                    ActionList actionList = ActionFactory.generateMoveWithinContainer(control, model, pawn, destX, destY);
+                        if (element instanceof Pawn) {
+                            pawn = (Pawn) element;
+                        } else {
+                            throw new RuntimeException("No pawn found at " + fromDefault);
+                        }
+                    }
+
+                    fromDefault = null;
+                    int destX = actions.get(i).charAt(0) - 'A';
+                    int destY = actions.get(i).charAt(1) - '1';
+
+                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    String color = boardLook.getColor(destY, destX);
+                    stageModel.setLockedColor(color);
+
+
+                    ActionList actionList = ActionFactory.generateMoveWithinContainer(control, model, pawn, destY, destX);
+
+                    ActionPlayer action = new ActionPlayer(model, control, actionList);
+                    actionList.setDoEndOfTurn(true);
+                    action.start();
+
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    model.setNextPlayer();
+                    pawn = stageModel.searchPawnFromLockedColor();
+                    System.out.println("Pawn: " + pawn);
                 }
             }
         }
