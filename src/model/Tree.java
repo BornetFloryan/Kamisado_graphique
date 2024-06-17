@@ -37,16 +37,16 @@ public class Tree {
         }
     }
 
-    public int[] getMaxTo() {
+    public Node getMaxTo() {
         if (root == null) {
             return null;
         }
         return getMaxToRecursive(root);
     }
 
-    private int[] getMaxToRecursive(Node node) {
+    private Node getMaxToRecursive(Node node) {
         if (node.getRight() == null) {
-            return node.getTo();
+            return node;
         } else {
             return getMaxToRecursive(node.getRight());
         }

@@ -19,7 +19,7 @@ public class Kamisado extends Application {
         double width = Screen.getPrimary().getBounds().getWidth();
         double height = Screen.getPrimary().getBounds().getHeight();
 
-        Logger.setLevel(Logger.LOGGER_DEBUG);
+//        Logger.setLevel(Logger.LOGGER_DEBUG);
 
         // create the global model
         Model model = new Model();
