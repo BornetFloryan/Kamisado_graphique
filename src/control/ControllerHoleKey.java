@@ -209,12 +209,6 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                     actionList.setDoEndOfTurn(true);
                     action.start();
 
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
                     model.setNextPlayer();
                     pawn = stageModel.searchPawnFromLockedColor();
                 }
