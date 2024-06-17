@@ -1,7 +1,12 @@
 package model;
 
 import boardifier.model.*;
+import control.ControllerHoleMouse;
 import javafx.stage.Screen;
+import view.KamisadoBoardLook;
+
+import java.awt.*;
+import java.util.List;
 
 public class KamisadoStageModel extends GameStageModel {
 
@@ -22,7 +27,9 @@ public class KamisadoStageModel extends GameStageModel {
 
     public KamisadoStageModel(String name, Model model) {
         super(name, model);
-        state = STATE_SELECTPAWN;
+
+        setState(STATE_SELECTPAWN);
+
         this.width = Screen.getPrimary().getBounds().getWidth();
         this.height = Screen.getPrimary().getBounds().getHeight();
     }
@@ -62,7 +69,7 @@ public class KamisadoStageModel extends GameStageModel {
         }
     }
 
-    public ContainerElement getBoard() {
+    public HoleBoard getBoard() {
         return board;
     }
 
@@ -94,5 +101,60 @@ public class KamisadoStageModel extends GameStageModel {
         }
 
         return false;
+    }
+
+    public boolean isDraw() {
+        return !playerCanPlay(0) && !playerCanPlay(1);
+    }
+
+    public boolean playerCanPlay(int idPlayer) {
+        if (idPlayer == 0) {
+            for (Pawn pawn : XPawns) {
+                List<Point> valid = board.computeValidCells(pawn);
+                if (!valid.isEmpty()) {
+                    return true;
+                }
+            }
+        } else {
+            for (Pawn pawn : OPawns) {
+                List<Point> valid = board.computeValidCells(pawn);
+                if (!valid.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public Pawn searchPawnFromLockedColor() {
+        System.out.println("Locked color: " + lockedColor);
+
+        Pawn[] pawns;
+
+        if (getCurrentPlayerName().equals(model.getPlayers().get(0).getName())) {
+            pawns = XPawns;
+        } else {
+            pawns = OPawns;
+        }
+
+        for (Pawn pawn : pawns) {
+            if (pawn.getColor().equals(lockedColor)) {
+                return pawn;
+            }
+        }
+
+        return null;
+    }
+
+    public void computePartyResult() {
+        if (isWin()) {
+            return;
+        }
+
+        if (isDraw()) {
+            model.setIdWinner(-1);
+            model.stopGame();
+        }
     }
 }

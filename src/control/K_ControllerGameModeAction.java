@@ -188,6 +188,8 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
     private void startGamePvP() {
         stage.setFullScreen(false);
 
+        model.getPlayers().clear();
+
         Dialog<List<String>> dialog = getPvPDialog();
         Optional<List<String>> result = dialog.showAndWait();
 
@@ -211,17 +213,19 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
     private void startGamePvC() {
         stage.setFullScreen(false);
 
+        model.getPlayers().clear();
+
         Dialog<List<String>> dialog = getPvCDialog();
         Optional<List<String>> result = dialog.showAndWait();
 
         result.ifPresent(playerNames -> {
             String player1Name = playerNames.get(0).isEmpty() ? "Player 1" : playerNames.get(0);
-            String computer1Name = playerNames.get(1).isEmpty() ? "Computer 1" : playerNames.get(1);
+            String computer1Name = playerNames.get(1).isEmpty() ? "Computer 2" : playerNames.get(1);
 
             if (playerNames.get(2).equals("Easy"))
-                AISelector.setAI(1, new HoleNaiveDecider(model, control));
+                AISelector.setAI(1, "Easy");
             else {
-                AISelector.setAI(1, new HoleSmartDecider(model, control));
+                AISelector.setAI(1, "Hard");
             }
 
             model.addHumanPlayer(player1Name);
@@ -240,6 +244,8 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
     private void startGameCvC() {
         stage.setFullScreen(false);
 
+        model.getPlayers().clear();
+
         Dialog<List<String>> dialog = getCpCDialog();
         Optional<List<String>> result = dialog.showAndWait();
 
@@ -248,15 +254,15 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
             String computer2Name = playerNames.get(2).isEmpty() ? "Computer 2" : playerNames.get(2);
 
             if (playerNames.get(1).equals("Easy"))
-                AISelector.setAI(0, new HoleNaiveDecider(model, control));
+                AISelector.setAI(0, "Easy");
             else {
-                AISelector.setAI(0, new HoleSmartDecider(model, control));
+                AISelector.setAI(0, "Hard");
             }
 
             if (playerNames.get(3).equals("Easy"))
-                AISelector.setAI(1, new HoleNaiveDecider(model, control));
+                AISelector.setAI(1, "Easy");
             else {
-                AISelector.setAI(1, new HoleSmartDecider(model, control));
+                AISelector.setAI(1, "Hard");
             }
 
             model.addComputerPlayer(computer1Name);
@@ -266,6 +272,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
         stage.setFullScreen(true);
         try {
             control.startGame();
+
             stage.setFullScreen(true);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

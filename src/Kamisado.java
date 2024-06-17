@@ -1,4 +1,3 @@
-import boardifier.control.Logger;
 import boardifier.control.StageFactory;
 import boardifier.model.Model;
 import control.K_ControllerMenueAction;

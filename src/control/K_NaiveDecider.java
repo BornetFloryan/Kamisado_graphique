@@ -5,14 +5,15 @@ import boardifier.control.Decider;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 
-public class HoleNaiveDecider extends Decider {
-    public HoleNaiveDecider(Model model, Controller control) {
-        super(model, control);
+public class K_NaiveDecider extends Decider {
+    public K_NaiveDecider(Model model, Controller controller) {
+        super(model, controller);
     }
 
     @Override
     public ActionList decide() {
         // TODO : implement the naive decider
+        System.out.println("Naive Decider");
         return null;
     }
 }

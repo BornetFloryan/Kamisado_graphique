@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class AISelector {
-    private static final Map<Integer, Decider> aiMap = new HashMap<>();
+    private static final Map<Integer, String> aiMap = new HashMap<>();
 
-    public static void setAI(int playerIndex, Decider decider) {
-        aiMap.put(playerIndex, decider);
+    public static void setAI(int playerIndex, String typeAI) {
+        aiMap.put(playerIndex, typeAI);
     }
 
-    public static Decider getDecider(int playerIndex) {
+    public static String getDecider(int playerIndex) {
         return aiMap.get(playerIndex);
     }
 }
