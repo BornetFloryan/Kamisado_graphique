@@ -11,10 +11,7 @@ import model.KamisadoStageModel;
 import model.Pawn;
 import view.KamisadoBoardLook;
 
-
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * A mouse controller that handles mouse clicks, selects pawns, and moves them.
@@ -92,18 +89,17 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
     }
 
     private void resetSelection(HoleBoard board) {
-        selectedPawn.toggleSelected(); // Unselect the pawn
-        selectedPawn = null;
+        if (selectedPawn != null) {
+            selectedPawn.toggleSelected(); // Unselect the pawn
+            selectedPawn = null;
+        }
         board.resetReachableCells(false);
     }
 
     public void setPawnFromLockedColor(KamisadoStageModel stageModel, HoleBoard board, Player player) {
         Logger.debug("Setting pawn from locked color: " + stageModel.getLockedColor()); // Debug locked color
-        System.out.println(stageModel.getLockedColor());
-        if (stageModel.getLockedColor() == null) return;
 
-        Pawn validPawn = stageModel.searchPawnFromLockedColor();
-        board.setValidCells(validPawn);
+        if (stageModel.getLockedColor() == null) return;
 
         Pawn[] pawns;
 
@@ -117,20 +113,31 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         for (Pawn pawn : pawns) {
             if (pawn.getColor().equals(color)) {
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 selectedPawn = pawn;
-                Logger.debug("Pawn selected: " + selectedPawn + " with color: " + color); // Debug pawn selection
                 selectedPawn.toggleSelected();
                 board.setValidCells(selectedPawn);
                 stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
+
                 return;
             }
         }
     }
 
-    private void performMoveAction(KamisadoStageModel stageModel, int[] targetCell) {
+    public void performMoveAction(KamisadoStageModel stageModel, int[] targetCell) {
+        int fromX = stageModel.getBoard().getPawnGridCoordinate(selectedPawn.getY(), stageModel.getBoard().getNbCols());
+        int fromY = stageModel.getBoard().getPawnGridCoordinate(selectedPawn.getX(), stageModel.getBoard().getNbRows());
+
+        Logger.debug("Move from " + fromX + " " + fromY + " to " + targetCell[0] + " " + targetCell[1]);
+
         ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, selectedPawn, targetCell[0], targetCell[1]);
         actions.setDoEndOfTurn(true);
-        selectedPawn.setLocation(targetCell[0], targetCell[1]);
 
         resetSelection(stageModel.getBoard());
 
