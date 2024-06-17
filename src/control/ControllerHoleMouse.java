@@ -127,4 +127,18 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
         ActionPlayer actionPlayer = new ActionPlayer(model, control, actions);
         actionPlayer.start();
     }
+
+    public void setPawnFromLockedColor(Pawn pawn) {
+        if (selectedPawn != null) selectedPawn.toggleSelected();
+
+        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        HoleBoard board = stageModel.getBoard();
+
+        selectedPawn = pawn;
+        selectedPawn.toggleSelected();
+        selectedPawn = pawn;
+        selectedPawn.toggleSelected();
+        stageModel.setState(KamisadoStageModel.STATE_SELECTDEST);
+        board.setValidCells(selectedPawn);
+    }
 }

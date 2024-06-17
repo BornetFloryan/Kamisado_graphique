@@ -70,7 +70,7 @@ public class K_SmartDecider extends Decider {
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
-        System.out.println("Locked color to destination: " + color);
+//        System.out.println("Locked color to destination: " + color);
 
 
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[1], to[0]);
