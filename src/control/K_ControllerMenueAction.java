@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import view.K_GameModePane;
 import view.K_HomeRootPane;
+import view.K_HowToPlayPane;
 import view.KamisadoView;
 
 public class K_ControllerMenueAction extends ControllerAction implements EventHandler<ActionEvent> {
@@ -34,7 +35,8 @@ public class K_ControllerMenueAction extends ControllerAction implements EventHa
             view = new KamisadoView(model, stage, new K_GameModePane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerGameModeAction(model, view, (KamisadoController) control, stage));
         } else if (event.getSource() == rootPane.getHowToPlayButton()) {
-            System.out.println("How to play");
+            view = new KamisadoView(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
+            control.setControlAction(new K_ControllerHowToPlay(model, view, (KamisadoController) control, stage));
         } else if (event.getSource() == rootPane.getQuitButton()) {
             System.exit(0);
         }
