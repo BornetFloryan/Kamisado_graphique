@@ -74,6 +74,7 @@ public class KamisadoBoardLook extends ClassicBoardLook {
     }
 
     public String getColor(int row, int col) {
+        System.out.println("Getting color at row: " + row + ", col: " + col + " -> " + board_color[row][col].replace("0x", "#"));
         return board_color[row][col];
     }
 }

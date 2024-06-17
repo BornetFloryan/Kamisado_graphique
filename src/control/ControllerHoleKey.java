@@ -27,6 +27,10 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
 
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             System.out.println("Key pressed: " + event.getCode().toString());
+
+            if (event.getCode() == KeyCode.ESCAPE) {
+                System.exit(0);
+            }
         }
     }
 }

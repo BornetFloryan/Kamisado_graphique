@@ -53,9 +53,10 @@ public class K_SmartDecider extends Decider {
 
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
 
+        System.out.println("LockedColor for smart IA");
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
-        System.out.println("Locked color from to[0] to[1]: " + color.replace("0x", "#"));
+
 
 
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[1], to[0]);

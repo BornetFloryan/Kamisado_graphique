@@ -82,6 +82,7 @@ public class ControllerHoleMouse extends ControllerMouse implements EventHandler
 
         if (targetCell != null && board.canReachCell(targetCell[0], targetCell[1])) {
             // Get the color of the board cell
+            System.out.println("Target cell: " + targetCell[0] + ", " + targetCell[1]);
             String color = lookBoard.getColor(targetCell[0], targetCell[1]);
             stageModel.setLockedColor(color);
 
