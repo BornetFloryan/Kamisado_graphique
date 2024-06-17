@@ -96,10 +96,30 @@ public class K_SmartDecider extends Decider {
 
     private void setLoosingMove(KamisadoStageModel stage, HoleBoard board) {
         MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board);
+        List<Integer[]> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
+
+
+        System.out.println("validMoveCurrentPlayer:");
+        for (Integer[] move : validMoveCurrentPlayer) {
+            System.out.println(move[0] + " " + move[1]);
+        }
 
         displayBoard(minimalBoardBase);
-
     }
+
+    private List<Integer[]> getValidCurrentPlayerMove(HoleBoard board) {
+        boolean[][] reachableCells = board.getReachableCells();
+        List<Integer[]> validMoveCurrentPlayer = new ArrayList<>();
+        for (int i = 0; i < board.getNbCols(); i++) {
+            for (int j = 0; j < board.getNbRows(); j++) {
+                if (reachableCells[i][j]) {
+                    validMoveCurrentPlayer.add(new Integer[]{i, j});
+                }
+            }
+        }
+        return validMoveCurrentPlayer;
+    }
+
 
 
 
