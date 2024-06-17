@@ -28,6 +28,10 @@ public class UnitTestKamisadoStageFactory {
     private TextElement text;
     private double width;
     private double height;
+    private double boardWidth;
+    private double boardHeight;
+    private double boardX;
+    private double boardY;
 
 
     @BeforeEach
@@ -41,7 +45,13 @@ public class UnitTestKamisadoStageFactory {
                 width = Screen.getPrimary().getBounds().getWidth();
                 height = Screen.getPrimary().getBounds().getHeight();
 
+                boardWidth = width * 0.8;
+                boardHeight = height * 0.9;
+                boardX = (width - boardWidth) / 2;
+                boardY = (height - boardHeight) / 2;
+
                 model = new Model();
+
                 model.addHumanPlayer("Player X");
                 model.addComputerPlayer("Computer O");
 
@@ -64,10 +74,7 @@ public class UnitTestKamisadoStageFactory {
     @Test
     void testSetup(){
         text = stageModel.getPlayerName();
-        double boardWidth = width * 0.8;
-        double boardHeight = height * 0.9;
-        double boardX = (width - boardWidth) / 2;
-        double boardY = (height - boardHeight) / 2;
+
         assertNotNull(text);
         assertEquals(boardX + 50, text.getX());
         assertEquals(boardY + 100, text.getY());
