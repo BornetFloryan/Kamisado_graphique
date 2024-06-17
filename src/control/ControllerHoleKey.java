@@ -96,6 +96,119 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                     actionList.setDoEndOfTurn(true);
                     action.start();
 
+                    model.setNextPlayer();
+                    pawn = stageModel.searchPawnFromLockedColor();
+                }
+            }
+
+            //O_Win
+            if (event.isControlDown() && event.getCode() == KeyCode.O) {
+                stageModel = (KamisadoStageModel) model.getGameStage();
+                board = stageModel.getBoard();
+
+
+                List<String> actions = new ArrayList<>();
+                actions.add("D5");
+                actions.add("H7");
+                actions.add("C5");
+                actions.add("G8");
+
+                String fromDefault = "G8";
+                Pawn pawn = null;
+
+                for (int i = 0; i < actions.size(); i++) {
+                    if (fromDefault != null) {
+                        int fromX = fromDefault.charAt(0) - 'A';
+                        int fromY = fromDefault.charAt(1) - '1';
+
+                        GameElement element = board.getElement(fromY, fromX);
+
+                        if (element instanceof Pawn) {
+                            pawn = (Pawn) element;
+                        } else {
+                            throw new RuntimeException("No pawn found at " + fromDefault);
+                        }
+                    }
+
+                    fromDefault = null;
+                    int destX = actions.get(i).charAt(0) - 'A';
+                    int destY = actions.get(i).charAt(1) - '1';
+
+                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    String color = boardLook.getColor(destY, destX);
+                    stageModel.setLockedColor(color);
+
+
+                    ActionList actionList = ActionFactory.generateMoveWithinContainer(control, model, pawn, destY, destX);
+
+                    ActionPlayer action = new ActionPlayer(model, control, actionList);
+                    actionList.setDoEndOfTurn(true);
+                    action.start();
+
+                    model.setNextPlayer();
+                    pawn = stageModel.searchPawnFromLockedColor();
+                }
+            }
+
+            //Draw
+            if (event.isControlDown() && event.getCode() == KeyCode.D) {
+                stageModel = (KamisadoStageModel) model.getGameStage();
+                board = stageModel.getBoard();
+
+                List<String> actions = new ArrayList<>();
+                actions.add("A2");
+                actions.add("D3");
+                actions.add("D7");
+                actions.add("B6");
+                actions.add("E7");
+                actions.add("D4");
+                actions.add("H7");
+                actions.add("B5");
+                actions.add("G4");
+                actions.add("A6");
+                actions.add("B3");
+                actions.add("C2");
+                actions.add("C6");
+                actions.add("H4");
+                actions.add("D6");
+                actions.add("F4");
+                actions.add("A7");
+                actions.add("E5");
+                actions.add("H6");
+                actions.add("C5");
+
+                String fromDefault = "A8";
+                Pawn pawn = null;
+
+                for (int i = 0; i < actions.size(); i++) {
+                    if (fromDefault != null) {
+                        int fromX = fromDefault.charAt(0) - 'A';
+                        int fromY = fromDefault.charAt(1) - '1';
+
+                        GameElement element = board.getElement(fromY, fromX);
+
+                        if (element instanceof Pawn) {
+                            pawn = (Pawn) element;
+                        } else {
+                            throw new RuntimeException("No pawn found at " + fromDefault);
+                        }
+                    }
+
+                    fromDefault = null;
+                    int destX = actions.get(i).charAt(0) - 'A';
+                    int destY = actions.get(i).charAt(1) - '1';
+
+                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    String color = boardLook.getColor(destY, destX);
+                    stageModel.setLockedColor(color);
+
+
+                    ActionList actionList = ActionFactory.generateMoveWithinContainer(control, model, pawn, destY, destX);
+
+                    ActionPlayer action = new ActionPlayer(model, control, actionList);
+                    actionList.setDoEndOfTurn(true);
+                    action.start();
+
                     try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
@@ -104,7 +217,6 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
 
                     model.setNextPlayer();
                     pawn = stageModel.searchPawnFromLockedColor();
-                    System.out.println("Pawn: " + pawn);
                 }
             }
         }
