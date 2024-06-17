@@ -96,11 +96,6 @@ public class UnitTestControllerHoleMouse {
 
         board = stageModel.getBoard();
 
-        System.out.println("BoardWidth: " + boardWidth);
-        System.out.println("BoardHeight: " + boardHeight);
-        System.out.println("BoardX: " + boardX);
-        System.out.println("BoardY: " + boardY);
-
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 element = board.getElement(i, j);
