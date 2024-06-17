@@ -21,11 +21,8 @@ public class KamisadoStageFactory extends StageElementsFactory {
 
     @Override
     public void setup() {
-        // Board of Kamisado game
-        double boardWidth = width * 0.8;
-        double boardHeight = height * 0.9;
-        double boardX = (width - boardWidth) / 2;
-        double boardY = (height - boardHeight) / 2;
+        double boardX = (width - 400) * 0.2;
+        double boardY = (height + 500) * 0.5;
 
         TextElement text = new TextElement(stageModel.getCurrentPlayerName(), stageModel);
         text.setLocation(boardX + 50, boardY + 100);
