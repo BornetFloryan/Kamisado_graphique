@@ -21,14 +21,16 @@ public class KamisadoStageFactory extends StageElementsFactory {
 
     @Override
     public void setup() {
-        double boardX = (width - 400) * 0.2;
-        double boardY = (height + 500) * 0.5;
+        // Center the board from the screen (the board is 8x8)
+        double boardX = width * 0.38;
+        double boardY = height * 0.25;
+
 
         TextElement text = new TextElement(stageModel.getCurrentPlayerName(), stageModel);
         text.setLocation(boardX + 50, boardY + 100);
         stageModel.setPlayerName(text);
 
-        HoleBoard board = new HoleBoard((int) boardY, (int) boardX, stageModel);
+        HoleBoard board = new HoleBoard((int) boardX, (int) boardY, stageModel);
         stageModel.setBoard(board);
         stageModel.addElement(board);
 
