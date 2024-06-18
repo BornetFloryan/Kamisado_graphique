@@ -38,12 +38,6 @@ public class K_Controller extends Controller {
 
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
             play();
-        } else {
-            model.setNextPlayer();
-
-
-            K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
-            mouse.setPawnFromLockedColor((K_StageModel) model.getGameStage(), ((K_StageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
         }
     }
 
@@ -69,8 +63,11 @@ public class K_Controller extends Controller {
         } else {
             Logger.debug("PLAYER PLAYS");
 
-            K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
-            mouse.setPawnFromLockedColor((K_StageModel) model.getGameStage(), ((K_StageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
+            if (((K_StageModel) model.getGameStage()).getLockedColor() != null) {
+                K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
+                mouse.setPawnFromLockedColor((K_StageModel) model.getGameStage(), ((K_StageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
+            }
+
         }
     }
 }

@@ -33,9 +33,9 @@ public class HoleBoard extends ContainerElement {
     public List<Point> computeValidCells(Pawn pawn) {
         K_StageModel stage = (K_StageModel) gameStageModel;
         List<Point> validCells = new ArrayList<>();
-//        int[][] directions = getPlayerDirections(stage);
+        int[][] directions = getPlayerDirections(stage);
 
-        int[][] directions = pawn.getSymbol() == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {-1, 1}, {1, 1}};
+//        int[][] directions = pawn.getSymbol() == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {-1, 1}, {1, 1}};
 
         for (int[] direction : directions) {
             int dx = direction[0];

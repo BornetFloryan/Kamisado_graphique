@@ -136,8 +136,6 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
 
         Logger.debug("Move from " + fromX + " " + fromY + " to " + targetCell[0] + " " + targetCell[1]);
 
-        stageModel.setPreviousPawn(selectedPawn);
-
         ActionList actions = ActionFactory.generateMoveWithinContainer(control, model, selectedPawn, targetCell[0], targetCell[1]);
         actions.setDoEndOfTurn(true);
 
