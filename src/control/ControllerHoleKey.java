@@ -7,15 +7,23 @@ import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 import boardifier.view.View;
 import javafx.event.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.*;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.HoleBoard;
 import model.KamisadoStageModel;
 import model.Pawn;
+import view.K_GameModePane;
+import view.K_HomeRootPane;
 import view.KamisadoBoardLook;
+import view.KamisadoView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
 /**
@@ -27,6 +35,9 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
     private Stack<KeyEvent> keyEvents = new Stack<>();
     private KamisadoStageModel stageModel;
     private HoleBoard board;
+    private K_HomeRootPane rootPane;
+    private Stage stage;
+
 
     public ControllerHoleKey(Model model, View view, Controller control) {
         super(model, view, control);
@@ -213,6 +224,29 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                     pawn = stageModel.searchPawnFromLockedColor();
                 }
             }
+            if (event.getCode() == KeyCode.BACK_SPACE) {
+                    model.pauseGame();
+                    String message = "";
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.UNDECORATED);
+                    alert.initOwner(view.getStage());
+                    alert.setHeaderText(message);
+                    ButtonType resume = new ButtonType("Resume");
+                    ButtonType quit = new ButtonType("Left the game");
+                    alert.getButtonTypes().clear();
+                    alert.getButtonTypes().addAll(resume, quit);
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get() == resume) {
+                        model.resumeGame();
+                    } else if (option.get() == quit) {
+                        model.stopGame();
+                        model.stopStage();
+
+                    } else {
+                        System.err.println("Abnormal case: dialog closed with not choice");
+                        System.exit(1);
+                    }
+                }
         }
     }
 }
