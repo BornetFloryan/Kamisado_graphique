@@ -57,6 +57,7 @@ public class K_SmartDecider extends Decider {
         tree.displayTree();
 
         Node nodeTo = tree.getMaxTo();
+        System.out.println();
 
         int[] to;
 
