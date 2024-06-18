@@ -18,12 +18,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.HoleBoard;
-import model.KamisadoStageModel;
+import model.K_StageModel;
 import model.Pawn;
 import view.K_GameModePane;
 import view.K_HomeRootPane;
-import view.KamisadoBoardLook;
-import view.KamisadoView;
+import view.K_BoardLook;
+import view.K_View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ import java.util.Stack;
 public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEvent> {
     // Create a stack of key events
     private final Stack<KeyEvent> keyEvents = new Stack<>();
-    private KamisadoStageModel stageModel;
+    private K_StageModel stageModel;
     private HoleBoard board;
     private K_HomeRootPane rootPane;
     private Stage stage;
@@ -68,7 +68,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
 
             //X_Win
             if (event.isControlDown() && event.getCode() == KeyCode.X) {
-                stageModel = (KamisadoStageModel) model.getGameStage();
+                stageModel = (K_StageModel) model.getGameStage();
                 board = stageModel.getBoard();
 
 
@@ -100,7 +100,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
                     int destX = actions.get(i).charAt(0) - 'A';
                     int destY = actions.get(i).charAt(1) - '1';
 
-                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    K_BoardLook boardLook = (K_BoardLook) control.getElementLook(board);
                     String color = boardLook.getColor(destY, destX);
                     stageModel.setLockedColor(color);
 
@@ -118,7 +118,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
 
             //O_Win
             if (event.isControlDown() && event.getCode() == KeyCode.O) {
-                stageModel = (KamisadoStageModel) model.getGameStage();
+                stageModel = (K_StageModel) model.getGameStage();
                 board = stageModel.getBoard();
 
 
@@ -149,7 +149,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
                     int destX = actions.get(i).charAt(0) - 'A';
                     int destY = actions.get(i).charAt(1) - '1';
 
-                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    K_BoardLook boardLook = (K_BoardLook) control.getElementLook(board);
                     String color = boardLook.getColor(destY, destX);
                     stageModel.setLockedColor(color);
 
@@ -167,7 +167,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
 
             //Draw
             if (event.isControlDown() && event.getCode() == KeyCode.D) {
-                stageModel = (KamisadoStageModel) model.getGameStage();
+                stageModel = (K_StageModel) model.getGameStage();
                 board = stageModel.getBoard();
 
                 List<String> actions = new ArrayList<>();
@@ -213,7 +213,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
                     int destX = actions.get(i).charAt(0) - 'A';
                     int destY = actions.get(i).charAt(1) - '1';
 
-                    KamisadoBoardLook boardLook = (KamisadoBoardLook) control.getElementLook(board);
+                    K_BoardLook boardLook = (K_BoardLook) control.getElementLook(board);
                     String color = boardLook.getColor(destY, destX);
                     stageModel.setLockedColor(color);
 
@@ -246,7 +246,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
                     RootPane root = (RootPane) view.getRootPane();
                     Stage K_stage = view.getStage();
 
-                    view = new KamisadoView(model, K_stage, new K_GameModePane(root.getWidth(), root.getHeight()));
+                    view = new K_View(model, K_stage, new K_GameModePane(root.getWidth(), root.getHeight()));
                     control.setControlAction(new K_ControllerGameModeAction(model, view, (K_Controller) control, K_stage));
 
 //                        System.exit(0);

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.KamisadoBoardLook;
+import view.K_BoardLook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UnitTestKamisadoStageModel {
+public class UnitTestKStageModel {
     private Model model;
     private View view;
     private Stage stage;
@@ -80,7 +80,7 @@ public class UnitTestKamisadoStageModel {
 
     @Test
     void testIsWinPlayerX(){
-        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        K_StageModel stageModel = (K_StageModel) model.getGameStage();
         HoleBoard board = stageModel.getBoard();
 
         List<String> actions = new ArrayList<>();
@@ -111,7 +111,7 @@ public class UnitTestKamisadoStageModel {
             int destX = actions.get(i).charAt(0) - 'A';
             int destY = actions.get(i).charAt(1) - '1';
 
-            KamisadoBoardLook boardLook = (KamisadoBoardLook) controller.getElementLook(board);
+            K_BoardLook boardLook = (K_BoardLook) controller.getElementLook(board);
             String color = boardLook.getColor(destY, destX);
             stageModel.setLockedColor(color);
 
@@ -136,7 +136,7 @@ public class UnitTestKamisadoStageModel {
 
     @Test
     void testIsWinPlayerO(){
-        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        K_StageModel stageModel = (K_StageModel) model.getGameStage();
         HoleBoard board = stageModel.getBoard();
 
         List<String> actions = new ArrayList<>();
@@ -166,7 +166,7 @@ public class UnitTestKamisadoStageModel {
             int destX = actions.get(i).charAt(0) - 'A';
             int destY = actions.get(i).charAt(1) - '1';
 
-            KamisadoBoardLook boardLook = (KamisadoBoardLook) controller.getElementLook(board);
+            K_BoardLook boardLook = (K_BoardLook) controller.getElementLook(board);
             String color = boardLook.getColor(destY, destX);
             stageModel.setLockedColor(color);
 

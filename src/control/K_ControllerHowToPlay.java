@@ -8,16 +8,16 @@ import javafx.stage.Stage;
 import view.K_DiagramsPane;
 import view.K_GameRulesPane;
 import view.K_HomeRootPane;
-import view.KamisadoView;
+import view.K_View;
 
 public class K_ControllerHowToPlay extends ControllerAction {
-    private KamisadoView view;
+    private K_View view;
     private final view.K_HowToPlayPane rootPane;
     private final Stage stage;
 
     public K_ControllerHowToPlay(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
-        this.view = (KamisadoView) view;
+        this.view = (K_View) view;
         this.stage = stage;
 
         // get root pane
@@ -31,15 +31,15 @@ public class K_ControllerHowToPlay extends ControllerAction {
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getBackToHomeButton()) {
-            view = new KamisadoView(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
+            view = new K_View(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerMenueAction(model, view, (K_Controller) control, stage));
         }
         else if (event.getSource() == rootPane.getGameRulesButton()) {
-            view = new KamisadoView(model, stage, new K_GameRulesPane(rootPane.getWidth(), rootPane.getHeight()));
+            view = new K_View(model, stage, new K_GameRulesPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerGamesRules(model, view, (K_Controller) control, stage));
         }
         else if (event.getSource() == rootPane.getDiagramsButton()) {
-            view = new KamisadoView(model, stage, new K_DiagramsPane(rootPane.getWidth(), rootPane.getHeight()));
+            view = new K_View(model, stage, new K_DiagramsPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerDiagrams(model, view, (K_Controller) control, stage));
         }
     }

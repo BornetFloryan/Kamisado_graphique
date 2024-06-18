@@ -6,16 +6,16 @@ import boardifier.view.View;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import view.K_HowToPlayPane;
-import view.KamisadoView;
+import view.K_View;
 
 public class K_ControllerGamesRules extends ControllerAction {
-    private KamisadoView view;
+    private K_View view;
     private final view.K_GameRulesPane rootPane;
     private final Stage stage;
 
     public K_ControllerGamesRules(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
-        this.view = (KamisadoView) view;
+        this.view = (K_View) view;
         this.stage = stage;
 
         // get root pane
@@ -27,7 +27,7 @@ public class K_ControllerGamesRules extends ControllerAction {
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getBackToHowToPlayButton()) {
-            view = new KamisadoView(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
+            view = new K_View(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerHowToPlay(model, view, (K_Controller) control, stage));
         }
     }

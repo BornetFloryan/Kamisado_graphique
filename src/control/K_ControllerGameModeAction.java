@@ -11,20 +11,20 @@ import javafx.stage.Stage;
 import model.AISelector;
 import view.K_GameModePane;
 import view.K_HomeRootPane;
-import view.KamisadoView;
+import view.K_View;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class K_ControllerGameModeAction extends ControllerAction implements EventHandler<ActionEvent> {
-    private KamisadoView view;
+    private K_View view;
     private final K_GameModePane rootPane;
     private final Stage stage;
 
     public K_ControllerGameModeAction(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
-        this.view = (KamisadoView) view;
+        this.view = (K_View) view;
         this.stage = stage;
 
         // get root pane
@@ -48,7 +48,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
             startGameCvC();
         }
         else if (event.getSource() == rootPane.getBackToHomeButton()) {
-            view = new KamisadoView(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
+            view = new K_View(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
             control.setControlAction(new K_ControllerMenueAction(model, view, (K_Controller) control, stage));
         }
     }

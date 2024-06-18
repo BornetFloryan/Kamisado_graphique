@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UnitTestHoleBoard {
     private Model model;
-    private KamisadoStageModel stageModel;
-    private KamisadoStageFactory stageFactory;
+    private K_StageModel stageModel;
+    private K_StageFactory stageFactory;
     private HoleBoard board;
     private double width;
     private double height;
@@ -39,8 +39,8 @@ public class UnitTestHoleBoard {
                 model.addHumanPlayer("Player X");
                 model.addComputerPlayer("Computer O");
 
-                stageModel = new KamisadoStageModel("Kamisado", model);
-                stageFactory = new KamisadoStageFactory(stageModel, width, height);
+                stageModel = new K_StageModel("Kamisado", model);
+                stageFactory = new K_StageFactory(stageModel, width, height);
                 stageFactory.setup();
 
                 board = stageModel.getBoard();

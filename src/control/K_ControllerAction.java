@@ -7,17 +7,17 @@ import boardifier.view.View;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-import view.KamisadoView;
+import view.K_View;
 
 public class K_ControllerAction extends ControllerAction implements EventHandler<ActionEvent> {
 
     // to avoid lots of casts, create an attribute that matches the instance type.
-    private KamisadoView holeView;
+    private K_View holeView;
 
     public K_ControllerAction(Model model, View view, Controller control) {
         super(model, view, control);
         // take the view parameter ot define a local view attribute with the real instance type, i.e. BasicView.
-        holeView = (KamisadoView) view;
+        holeView = (K_View) view;
 
         // set handlers dedicated to menu items
         setMenuHandlers();

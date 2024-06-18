@@ -9,8 +9,7 @@ import boardifier.model.Model;
 import boardifier.model.Player;
 import boardifier.view.View;
 import model.AISelector;
-import model.KamisadoStageModel;
-import model.Pawn;
+import model.K_StageModel;
 
 public class K_Controller extends Controller {
     private Thread play;
@@ -29,7 +28,7 @@ public class K_Controller extends Controller {
 
     @Override
     public void endOfTurn() {
-        KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
+        K_StageModel stageModel = (K_StageModel) model.getGameStage();
         stageModel.computePartyResult();
 
         model.setNextPlayer();
@@ -42,8 +41,9 @@ public class K_Controller extends Controller {
         } else {
             model.setNextPlayer();
 
+
             K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
-            mouse.setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
+            mouse.setPawnFromLockedColor((K_StageModel) model.getGameStage(), ((K_StageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
         }
     }
 
@@ -70,7 +70,7 @@ public class K_Controller extends Controller {
             Logger.debug("PLAYER PLAYS");
 
             K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
-            mouse.setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
+            mouse.setPawnFromLockedColor((K_StageModel) model.getGameStage(), ((K_StageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
         }
     }
 }

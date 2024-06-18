@@ -31,7 +31,7 @@ public class HoleBoard extends ContainerElement {
     }
 
     public List<Point> computeValidCells(Pawn pawn) {
-        KamisadoStageModel stage = (KamisadoStageModel) gameStageModel;
+        K_StageModel stage = (K_StageModel) gameStageModel;
         List<Point> validCells = new ArrayList<>();
 //        int[][] directions = getPlayerDirections(stage);
 
@@ -57,7 +57,7 @@ public class HoleBoard extends ContainerElement {
         return validCells;
     }
 
-    private int[][] getPlayerDirections(KamisadoStageModel stage) {
+    private int[][] getPlayerDirections(K_StageModel stage) {
         if (isFirstPlayer(stage)) {
             // Up, Up-Right, Up-Left
             return new int[][]{{0, -1}, {1, -1}, {-1, -1}};
@@ -67,7 +67,7 @@ public class HoleBoard extends ContainerElement {
         }
     }
 
-    private boolean isFirstPlayer(KamisadoStageModel stage) {
+    private boolean isFirstPlayer(K_StageModel stage) {
         return stage.getCurrentPlayerName().equals(stage.getModel().getPlayers().get(0).getName());
     }
 
