@@ -1,16 +1,20 @@
 package control;
 
-import boardifier.control.*;
+import boardifier.control.ActionFactory;
+import boardifier.control.ActionPlayer;
+import boardifier.control.Controller;
+import boardifier.control.ControllerKey;
 import boardifier.model.GameElement;
 import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
+import boardifier.view.RootPane;
 import boardifier.view.View;
-import javafx.event.*;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.*;
-import javafx.stage.Screen;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.HoleBoard;
@@ -32,7 +36,7 @@ import java.util.Stack;
  */
 public class ControllerHoleKey extends ControllerKey implements EventHandler<KeyEvent> {
     // Create a stack of key events
-    private Stack<KeyEvent> keyEvents = new Stack<>();
+    private final Stack<KeyEvent> keyEvents = new Stack<>();
     private KamisadoStageModel stageModel;
     private HoleBoard board;
     private K_HomeRootPane rootPane;
@@ -225,27 +229,33 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                 }
             }
             if (event.getCode() == KeyCode.BACK_SPACE) {
-                    model.pauseGame();
-                    String message = "Game paused. What do you want to do?";
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.initStyle(StageStyle.UNDECORATED);
-                    alert.initOwner(view.getStage());
-                    alert.setHeaderText(message);
-                    ButtonType resume = new ButtonType("Resume");
-                    ButtonType quit = new ButtonType("Left the game");
-                    alert.getButtonTypes().clear();
-                    alert.getButtonTypes().addAll(resume, quit);
-                    Optional<ButtonType> option = alert.showAndWait();
-                    if (option.get() == resume) {
-                        model.resumeGame();
-                    } else if (option.get() == quit) {
-                        System.exit(0);
+                model.pauseGame();
+                String message = "Game paused. What do you want to do?";
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.initOwner(view.getStage());
+                alert.setHeaderText(message);
+                ButtonType resume = new ButtonType("Resume");
+                ButtonType quit = new ButtonType("Select gae mode");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(resume, quit);
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == resume) {
+                    model.resumeGame();
+                } else if (option.get() == quit) {
+                    RootPane root = (RootPane) view.getRootPane();
+                    Stage K_stage = view.getStage();
 
-                    } else {
-                        System.err.println("Abnormal case: dialog closed with not choice");
-                        System.exit(1);
-                    }
+                    view = new KamisadoView(model, K_stage, new K_GameModePane(root.getWidth(), root.getHeight()));
+                    control.setControlAction(new K_ControllerGameModeAction(model, view, (KamisadoController) control, K_stage));
+
+//                        System.exit(0);
+
+                } else {
+                    System.err.println("Abnormal case: dialog closed with not choice");
+                    System.exit(1);
                 }
+            }
         }
     }
 }
