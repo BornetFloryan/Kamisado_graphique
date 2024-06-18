@@ -16,14 +16,12 @@ public class K_SmartDecider extends Decider {
     private static final List<int[]> winingMoveX = new ArrayList<>();
     private static final List<int[]> winingMoveO = new ArrayList<>();
 
-
     static {
         for (int i = 0; i < 8; i++) {
             winingMoveX.add(new int[]{i, 0});
             winingMoveO.add(new int[]{i, 7});
         }
     }
-
 
     public K_SmartDecider(Model model, Controller controller) {
         super(model, controller);
@@ -36,7 +34,6 @@ public class K_SmartDecider extends Decider {
         HoleBoard board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
-
 
         if (stage.getLockedColor() == null) {
             Pawn[] pawns = stage.getXPawns();
@@ -52,21 +49,25 @@ public class K_SmartDecider extends Decider {
 
         addToTreeAllValidMoves(board.getReachableCells(), tree);
         setLoosingMove(stage, board, fromX, fromY, tree);
+        setWiningMove(stage, board, tree);
 
         System.out.println("Tree:");
         tree.displayTree();
 
         Node nodeTo = tree.getMaxTo();
-        System.out.println();
 
         int[] to;
 
-        if (nodeTo.getValue() == 0) {
-            to = getRandomMove(board.getReachableCells());
+        if (nodeTo != null || nodeTo.getValue() == 50) {
+            to = nodeTo.getTo();
+        } else if (nodeTo == null || nodeTo.getValue() == 0) {
+            List<Node> nodes = tree.get0valueNode();
+            to = nodes.get(loto.nextInt(nodes.size())).getTo();
+            System.out.println("Selected random move: " + to[0] + " " + to[1]);
         } else {
             to = nodeTo.getTo();
+            System.out.println("Selected best move: " + to[0] + " " + to[1]);
         }
-
 
         if (to == null) {
             return null;
@@ -80,7 +81,6 @@ public class K_SmartDecider extends Decider {
         stage.setLockedColor(color);
 
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
-
         action.setDoEndOfTurn(true);
 
         return action;
@@ -99,7 +99,6 @@ public class K_SmartDecider extends Decider {
 
         return validMoves.get(loto.nextInt(validMoves.size()));
     }
-
 
     private void addToTreeAllValidMoves(boolean[][] reachableCells, Tree tree) {
         for (int i = 0; i < reachableCells.length; i++) {
@@ -142,6 +141,17 @@ public class K_SmartDecider extends Decider {
         }
     }
 
+    private void setWiningMove(KamisadoStageModel stage, HoleBoard board, Tree tree) {
+        boolean[][] reachableCells = board.getReachableCells();
+        int winningSide = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? 0 : 7;
+
+        for (int i = 0; i < board.getNbCols(); i++) {
+            if (reachableCells[winningSide][i]) {
+                tree.add(50, new int[]{winningSide, i});
+            }
+        }
+    }
+
     private boolean contains(List<int[]> list, int[] array) {
         for (int[] item : list) {
             if (Arrays.equals(item, array)) {
@@ -153,21 +163,15 @@ public class K_SmartDecider extends Decider {
 
     private List<Integer[]> getValidCellsMove(MinimalBoard[][] minimalBoard, int row, int col, char playerName) {
         List<Integer[]> lst = new ArrayList<>();
-        int[][] directions = playerName == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {-1, 1}, {1, 1}};
+        int[][] directions = playerName == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {1, -1}, {1, 1}}; // for the second direction: {0, 1} represent the direction to the bottom, {1, 1} represent the direction to the bottom right, {-1, 1} represent the direction to the bottom left
 
         for (int[] dir : directions) {
             int dx = dir[0], dy = dir[1];
             int x = row + dx, y = col + dy;
 
-            System.out.println("Default direction: " + dx + " " + dy + ", to: " + x + " " + y);
-
             while (x >= 0 && x < 8 && y >= 0 && y < 8) {
-
-                System.out.println("after x = " + x + ", y = " + y);
-
                 if (minimalBoard[x][y].getSymbol() == '.') {
-                    System.out.println("Adding: " + y + " " + x);
-                    lst.add(new Integer[]{y, x});
+                    lst.add(new Integer[]{x, y});
                 } else {
                     break;
                 }
@@ -182,23 +186,10 @@ public class K_SmartDecider extends Decider {
     private int[] findPawnFrom(MinimalBoard[][] minimalBoard, String color, char playerName) {
         for (int i = 0; i < minimalBoard.length; i++) {
             for (int j = 0; j < minimalBoard[i].length; j++) {
-
-
-                if (minimalBoard[i][j].getSymbol() == '.') {
+                if (minimalBoard[i][j].getSymbol() == '.' || minimalBoard[i][j].getSymbol() != playerName || !minimalBoard[i][j].getColor().equals(color)) {
                     continue;
                 }
-
-//                System.out.println("------------------------------------------------------------------------------------------------");
-//                System.out.println("minimalBoard[i][j].getSymbol() = " + minimalBoard[i][j].getSymbol());
-//                System.out.println("minimalBoard[i][j].getColor() = " + minimalBoard[i][j].getColor());
-//                System.out.println("minimalBoard[i][j].getSymbol() == playerName = " + (minimalBoard[i][j].getSymbol() == playerName));
-//                System.out.println("Color = " + color);
-//                System.out.println("minimalBoard[i][j].getColor().equals(color) = " + minimalBoard[i][j].getColor().equals(color));
-//                System.out.println("------------------------------------------------------------------------------------------------");
-
-                if (minimalBoard[i][j].getColor().equals(color) && minimalBoard[i][j].getSymbol() == playerName) {
-                    return new int[]{j, i};
-                }
+                return new int[]{j, i};
             }
         }
         return null;
@@ -227,12 +218,6 @@ public class K_SmartDecider extends Decider {
         return minimalBoard;
     }
 
-
-
-
-
-
-
     private void displayBoard(MinimalBoard[][] minimalBoard) {
         System.out.println("[");
         for (int i = 0; i < minimalBoard.length; i++) {
@@ -248,33 +233,4 @@ public class K_SmartDecider extends Decider {
         }
         System.out.println("]");
     }
-
-
-//    private void setLoosingMove(HoleStageModel stage, HoleBoard board, String from) {
-//        MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board);
-//        List<String> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
-//        String enemyName = stage.getCurrentPlayerName().contains("X") ? "Player O" : "Player X";
-//
-//        int rowFrom = from.charAt(0) - 'A';
-//        int colFrom = from.charAt(1) - '1';
-//
-//        for (String move : validMoveCurrentPlayer) {
-//            MinimalBoard[][] minimalBoard = cloneMinimalBoard(minimalBoardBase);
-//            int row = move.charAt(0) - 'A';
-//            int col = move.charAt(1) - '1';
-//
-//            minimalBoard[col][row] = minimalBoardBase[colFrom][rowFrom];
-//            minimalBoard[colFrom][rowFrom] = new MinimalBoard('N', -1);
-//
-//            String boardColorLock = stage.getBoardColor(stage, view, row, col);
-//            int[] coordPawnEnemy = findPawnFrom(minimalBoardBase, boardColorLock, enemyName);
-//            List<String> validMoveEnemyPlayer = stage.getValidCellsMove(minimalBoard, coordPawnEnemy[1], coordPawnEnemy[0], enemyName);
-//
-//            for (String enemyMove : validMoveEnemyPlayer) {
-//                if (winingMoveX.contains(enemyMove) || winingMoveO.contains(enemyMove)) {
-//                    tree.add(-50, move);
-//                }
-//            }
-//        }
-//    }
 }
