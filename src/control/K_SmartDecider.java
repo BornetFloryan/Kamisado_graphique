@@ -135,7 +135,7 @@ public class K_SmartDecider extends Decider {
                 int[] to = new int[]{enemyMove[0], enemyMove[1]};
 
                 if (contains(winingMoveX, to) || contains(winingMoveO, to)) {
-                    tree.add(-50, to);
+                    tree.add(-50, new int[]{move[0], move[1]});
                 }
             }
         }
@@ -152,7 +152,7 @@ public class K_SmartDecider extends Decider {
 
     private List<Integer[]> getValidCellsMove(MinimalBoard[][] minimalBoard, int row, int col, char playerName) {
         List<Integer[]> lst = new ArrayList<>();
-        int[][] directions = playerName == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {1, 1}, {-1, 1}};
+        int[][] directions = playerName == 'X' ? new int[][]{{0, -1}, {1, -1}, {-1, -1}} : new int[][]{{0, 1}, {-1, 1}, {1, 1}};
 
         for (int[] dir : directions) {
             int dx = dir[0], dy = dir[1];
