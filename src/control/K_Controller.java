@@ -10,6 +10,7 @@ import boardifier.model.Player;
 import boardifier.view.View;
 import model.AISelector;
 import model.KamisadoStageModel;
+import model.Pawn;
 
 public class K_Controller extends Controller {
     private Thread play;
@@ -36,11 +37,13 @@ public class K_Controller extends Controller {
         stageModel.getPlayerName().setText(p.getName());
 
 
-        System.out.println("Checking if player can play...");
         if (stageModel.playerCanPlay(model.getIdPlayer())) {
             play();
         } else {
-            endOfTurn();
+            model.setNextPlayer();
+
+            K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
+            mouse.setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
         }
     }
 

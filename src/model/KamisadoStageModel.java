@@ -158,11 +158,11 @@ public class KamisadoStageModel extends GameStageModel {
             board.resetReachableCells(false);
         }
 
-//        if (isDraw()) {
-//            board.resetReachableCells(false);
-//            model.setIdWinner(-1);
-//            model.stopGame();
-//        }
+        if (isDraw()) {
+            board.resetReachableCells(false);
+            model.setIdWinner(-1);
+            model.stopGame();
+        }
     }
 
 
