@@ -16,7 +16,6 @@ public class K_NaiveDecider extends Decider {
     private static final List<int[]> winingMoveX = new ArrayList<>();
     private static final List<int[]> winingMoveO = new ArrayList<>();
 
-
     static {
         for (int i = 0; i < 8; i++) {
             winingMoveX.add(new int[]{i, 0});
@@ -24,11 +23,11 @@ public class K_NaiveDecider extends Decider {
         }
     }
 
-
     public K_NaiveDecider(Model model, Controller controller) {
         super(model, controller);
     }
 
+    @Override
     public ActionList decide() {
         Logger.debug("NAIVE AI is deciding");
 
@@ -36,7 +35,6 @@ public class K_NaiveDecider extends Decider {
         HoleBoard board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
-
 
         if (stage.getLockedColor() == null) {
             Pawn[] pawns = stage.getXPawns();
@@ -46,35 +44,18 @@ public class K_NaiveDecider extends Decider {
         }
 
         board.setValidCells(pawn);
-
-        int fromX = board.getPawnGridCoordinate(pawn.getY(), board.getNbCols());
         int fromY = board.getPawnGridCoordinate(pawn.getX(), board.getNbRows());
 
-        addToTreeAllValidMoves(board.getReachableCells(), tree, fromY);
-
-        System.out.println("Tree:");
-        tree.displayTree();
+        addToTreeAllValidMoves(board.getReachableCells(), tree, fromY, pawn.getSymbol());
 
         Node nodes = tree.getMaxTo();
-
-        System.out.println("Max node: " + Arrays.toString(nodes.getTo()) + " with value: " + nodes.getValue());
-
-        int[] to;
-
-        if (nodes.getValue() == 0) {
-            to = getRandomMove(board.getReachableCells());
-        } else {
-            to = nodes.getTo();
-        }
-
-
+        int[] to = (nodes.getValue() == 0) ? getRandomMove(board.getReachableCells()) : nodes.getTo();
 
         KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
-
         action.setDoEndOfTurn(true);
 
         return action;
@@ -94,20 +75,48 @@ public class K_NaiveDecider extends Decider {
         return validMoves.get(loto.nextInt(validMoves.size()));
     }
 
-
-    private void addToTreeAllValidMoves(boolean[][] reachableCells, Tree tree, int rowFrom) {
+    private void addToTreeAllValidMoves(boolean[][] reachableCells, Tree tree, int rowFrom, char pawnSymbol) {
         int maxRow = reachableCells.length - 1;
         int maxCol = reachableCells[0].length - 1;
+        boolean isMovingBottomToTop = pawnSymbol == 'X';
 
         for (int i = 0; i <= maxRow; i++) {
             for (int j = 0; j <= maxCol; j++) {
                 if (reachableCells[i][j]) {
                     int distance = Math.abs(rowFrom - i);
-                    int value = distance; // Plus la distance est grande, plus la valeur est grande
-
+                    int value = calculateMoveValue(i, j, maxRow, isMovingBottomToTop, distance);
                     tree.add(value, new int[]{i, j});
                 }
             }
         }
+    }
+
+    private int calculateMoveValue(int row, int col, int maxRow, boolean isMovingBottomToTop, int distance) {
+        int maxCol = 7;
+        int baseValue;
+
+        if (isMovingBottomToTop) {
+            if (row == 0) {
+                baseValue = Integer.MAX_VALUE;
+            } else if (row == 1) {
+                baseValue = distance + 10;
+            } else {
+                baseValue = distance;
+            }
+        } else {
+            if (row == maxRow) {
+                baseValue = Integer.MAX_VALUE;
+            } else if (row == maxRow - 1) {
+                baseValue = distance + 10;
+            } else {
+                baseValue = distance;
+            }
+        }
+
+        if (col == 0 || col == maxCol) {
+            baseValue += 2;
+        }
+
+        return baseValue;
     }
 }
