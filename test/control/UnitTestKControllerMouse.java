@@ -24,7 +24,7 @@ public class UnitTestKControllerMouse {
     private RootPane rootPane;
     private View view;
     private K_Controller controller;
-    private K_ControllerMouse KControllerMouse;
+    private K_ControllerMouse KcontrollerMouse;
     private HoleBoard board;
     private MouseEvent event;
     private MouseButton button;
@@ -67,7 +67,7 @@ public class UnitTestKControllerMouse {
 
                 StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
                 controller = new K_Controller(model, view);
-                KControllerMouse = new K_ControllerMouse(model, view, controller);
+                KcontrollerMouse = new K_ControllerMouse(model, view, controller);
 
                 controller.setFirstStageName("kamisado");
 
@@ -109,7 +109,7 @@ public class UnitTestKControllerMouse {
                             false, false, false, false, true, false, false, true,
                             false, false, null);
 
-                    KControllerMouse.handle(event);
+                    KcontrollerMouse.handle(event);
 
                     model.setCaptureMouseEvent(true);
 
@@ -117,7 +117,7 @@ public class UnitTestKControllerMouse {
                             false, false, false, false, true, false, false, true,
                             false, false, null);
 
-                    KControllerMouse.handle(event);
+                    KcontrollerMouse.handle(event);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class UnitTestKControllerMouse {
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
                 false, false, null);
-        KControllerMouse.handle(event);
+        KcontrollerMouse.handle(event);
 
         //Move Pawn location
         x = element.getX() + boardY;
@@ -144,7 +144,7 @@ public class UnitTestKControllerMouse {
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
                 false, false, null);
-        KControllerMouse.handle(event);
+        KcontrollerMouse.handle(event);
 
 
         //Change player
@@ -167,7 +167,7 @@ public class UnitTestKControllerMouse {
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
                 false, false, null);
-        KControllerMouse.handle(event);
+        KcontrollerMouse.handle(event);
 
         //Move Pawn location
         x = element.getX() + boardY;
@@ -176,7 +176,7 @@ public class UnitTestKControllerMouse {
         event = new MouseEvent(MouseEvent.MOUSE_CLICKED, x, y, x, y, button, clickCount,
                 false, false, false, false, true, false, false, true,
                 false, false, null);
-        KControllerMouse.handle(event);
+        KcontrollerMouse.handle(event);
     }
 }
 
