@@ -30,7 +30,7 @@ public class K_NaiveDecider extends Decider {
     }
 
     public ActionList decide() {
-        Logger.debug("Smart AI is deciding");
+        Logger.debug("NAIVE AI is deciding");
 
         KamisadoStageModel stage = (KamisadoStageModel) model.getGameStage();
         HoleBoard board = stage.getBoard();
@@ -55,17 +55,16 @@ public class K_NaiveDecider extends Decider {
         System.out.println("Tree:");
         tree.displayTree();
 
-        Node nodeTo = tree.getMaxTo();
+        Node nodes = tree.getMaxTo();
 
-        List<Node> nodes = tree.getAll10Point();
+        System.out.println("Max node: " + Arrays.toString(nodes.getTo()) + " with value: " + nodes.getValue());
 
         int[] to;
 
-        if (nodes.size() == 0) {
+        if (nodes.getValue() == 0) {
             to = getRandomMove(board.getReachableCells());
         } else {
-            int index = loto.nextInt(nodes.size());
-            to = nodes.get(index).getTo();
+            to = nodes.getTo();
         }
 
 
@@ -97,12 +96,16 @@ public class K_NaiveDecider extends Decider {
 
 
     private void addToTreeAllValidMoves(boolean[][] reachableCells, Tree tree, int rowFrom) {
-        for (int i = 0; i < reachableCells.length; i++) {
-            for (int j = 0; j < reachableCells[i].length; j++) {
-                if (reachableCells[i][j] && j == rowFrom) {
-                    tree.add(10, new int[]{i, j});
-                } else if (reachableCells[i][j] && j != rowFrom) {
-                    tree.add(0, new int[]{i, j});
+        int maxRow = reachableCells.length - 1;
+        int maxCol = reachableCells[0].length - 1;
+
+        for (int i = 0; i <= maxRow; i++) {
+            for (int j = 0; j <= maxCol; j++) {
+                if (reachableCells[i][j]) {
+                    int distance = Math.abs(rowFrom - i);
+                    int value = distance; // Plus la distance est grande, plus la valeur est grande
+
+                    tree.add(value, new int[]{i, j});
                 }
             }
         }

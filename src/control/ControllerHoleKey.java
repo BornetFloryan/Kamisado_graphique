@@ -236,7 +236,7 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                 alert.initOwner(view.getStage());
                 alert.setHeaderText(message);
                 ButtonType resume = new ButtonType("Resume");
-                ButtonType quit = new ButtonType("Select gae mode");
+                ButtonType quit = new ButtonType("Select game mode");
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(resume, quit);
                 Optional<ButtonType> option = alert.showAndWait();
