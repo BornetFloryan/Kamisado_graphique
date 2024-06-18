@@ -159,7 +159,7 @@ public class KamisadoStageModel extends GameStageModel {
     }
 
 
-    public MinimalBoard[][] createMinimalBoard(HoleBoard board) {
+    public MinimalBoard[][] createMinimalBoard(HoleBoard board, KamisadoBoardLook boardLook) {
         MinimalBoard[][] minimalBoardBase = new MinimalBoard[board.getNbCols()][board.getNbRows()];
         for (int i = 0; i < board.getNbCols(); i++) {
             for (int j = 0; j < board.getNbRows(); j++) {
@@ -169,7 +169,8 @@ public class KamisadoStageModel extends GameStageModel {
                     Pawn pawn = (Pawn) element;
                     minimalBoardBase[i][j] = new MinimalBoard(pawn.getSymbol(), pawn.getColor());
                 } else {
-                    minimalBoardBase[i][j] = new MinimalBoard('N', null);
+                    String color = boardLook.getColor(i, j);
+                    minimalBoardBase[i][j] = new MinimalBoard('.', color);
                 }
             }
         }

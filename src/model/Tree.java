@@ -22,7 +22,10 @@ public class Tree {
     }
 
     private void addRecursive(Node node, int value, int[] to) {
-        if (value > node.getValue()) {
+        if (Arrays.equals(node.getTo(), to)) {
+            // If the node with the same move exists, update its value
+            node.setValue(value);
+        } else if (value > node.getValue()) {
             if (node.getRight() == null) {
                 node.setRight(new Node(value, to));
             } else {
@@ -36,6 +39,7 @@ public class Tree {
             }
         }
     }
+
 
     public Node getMaxTo() {
         if (root == null) {
@@ -66,5 +70,9 @@ public class Tree {
             System.out.println("Value: " + node.getValue() + ", to: " + Arrays.toString(node.getTo()));
             displayTreeRecursive(node.getRight());
         }
+    }
+
+    public boolean isEmpty() {
+        return root == null;
     }
 }

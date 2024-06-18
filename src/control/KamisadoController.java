@@ -1,12 +1,10 @@
 package control;
 
-import boardifier.control.ActionPlayer;
-import boardifier.control.Controller;
-import boardifier.control.Decider;
-import boardifier.control.Logger;
+import boardifier.control.*;
 import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.model.Player;
+import boardifier.model.action.ActionList;
 import boardifier.view.View;
 import model.AISelector;
 import model.KamisadoStageModel;

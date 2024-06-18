@@ -47,4 +47,8 @@ public class Node {
         }
         this.to = to;
     }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
