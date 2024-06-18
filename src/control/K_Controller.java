@@ -1,6 +1,9 @@
 package control;
 
-import boardifier.control.*;
+import boardifier.control.ActionPlayer;
+import boardifier.control.Controller;
+import boardifier.control.Decider;
+import boardifier.control.Logger;
 import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.model.Player;
@@ -28,13 +31,17 @@ public class K_Controller extends Controller {
         KamisadoStageModel stageModel = (KamisadoStageModel) model.getGameStage();
         stageModel.computePartyResult();
 
-        if (stageModel.playerCanPlay(model.getIdPlayer())) {
-            model.setNextPlayer();
-            Player p = model.getCurrentPlayer();
-            stageModel.getPlayerName().setText(p.getName());
-        }
+        model.setNextPlayer();
+        Player p = model.getCurrentPlayer();
+        stageModel.getPlayerName().setText(p.getName());
 
-        play();
+
+        System.out.println("Checking if player can play...");
+        if (stageModel.playerCanPlay(model.getIdPlayer())) {
+            play();
+        } else {
+            endOfTurn();
+        }
     }
 
     public void play() {

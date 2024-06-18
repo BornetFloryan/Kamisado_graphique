@@ -103,22 +103,31 @@ public class KamisadoStageModel extends GameStageModel {
     }
 
     public boolean isDraw() {
-        return !playerCanPlay(0) && !playerCanPlay(1);
+        boolean player0CanPlay = playerCanPlay(0);
+        boolean player1CanPlay = playerCanPlay(1);
+        return !player0CanPlay && !player1CanPlay;
     }
 
     public boolean playerCanPlay(int idPlayer) {
+
+        Pawn pawn = ((KamisadoStageModel) model.getGameStage()).searchPawnFromLockedColor();
+
         if (idPlayer == 0) {
-            for (Pawn pawn : XPawns) {
-                List<Point> valid = board.computeValidCells(pawn);
-                if (!valid.isEmpty()) {
-                    return true;
+            for (Pawn p : XPawns) {
+                if (p == pawn) {
+                    List<Point> valid = board.computeValidCells(pawn);
+                    if (!valid.isEmpty()) {
+                        return true;
+                    }
                 }
             }
         } else {
-            for (Pawn pawn : OPawns) {
-                List<Point> valid = board.computeValidCells(pawn);
-                if (!valid.isEmpty()) {
-                    return true;
+            for (Pawn p : OPawns) {
+                if (p == pawn) {
+                    List<Point> valid = board.computeValidCells(pawn);
+                    if (!valid.isEmpty()) {
+                        return true;
+                    }
                 }
             }
         }
@@ -147,14 +156,13 @@ public class KamisadoStageModel extends GameStageModel {
     public void computePartyResult() {
         if (isWin()) {
             board.resetReachableCells(false);
-            return;
         }
 
-        if (isDraw()) {
-            board.resetReachableCells(false);
-            model.setIdWinner(-1);
-            model.stopGame();
-        }
+//        if (isDraw()) {
+//            board.resetReachableCells(false);
+//            model.setIdWinner(-1);
+//            model.stopGame();
+//        }
     }
 
 
