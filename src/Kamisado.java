@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import view.K_HomeRootPane;
-import view.KamisadoView;
+import view.K_View;
 
 public class Kamisado extends Application {
     public static void main(String[] args) {
@@ -30,7 +30,7 @@ public class Kamisado extends Application {
         K_HomeRootPane homeRootPane = new K_HomeRootPane(width, height);
 
         // create the global view.
-        KamisadoView view = new KamisadoView(model, stage, homeRootPane);
+        K_View view = new K_View(model, stage, homeRootPane);
 
         // create the controllers.
         K_Controller control = new K_Controller(model, view);

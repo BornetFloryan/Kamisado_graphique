@@ -7,7 +7,7 @@ import boardifier.control.Logger;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 import model.*;
-import view.KamisadoBoardLook;
+import view.K_BoardLook;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class K_SmartDecider extends Decider {
     public ActionList decide() {
         Logger.debug("Smart AI is deciding");
 
-        KamisadoStageModel stage = (KamisadoStageModel) model.getGameStage();
+        K_StageModel stage = (K_StageModel) model.getGameStage();
         HoleBoard board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
@@ -76,7 +76,7 @@ public class K_SmartDecider extends Decider {
         }
 
 
-        KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
+        K_BoardLook lookBoard = (K_BoardLook) control.getElementLook(board);
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
@@ -110,8 +110,8 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setLoosingMove(KamisadoStageModel stage, HoleBoard board, int fromX, int fromY, Tree tree) {
-        KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
+    private void setLoosingMove(K_StageModel stage, HoleBoard board, int fromX, int fromY, Tree tree) {
+        K_BoardLook lookBoard = (K_BoardLook) control.getElementLook(board);
         MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board, lookBoard);
         List<Integer[]> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
 
@@ -141,7 +141,7 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setWiningMove(KamisadoStageModel stage, HoleBoard board, Tree tree) {
+    private void setWiningMove(K_StageModel stage, HoleBoard board, Tree tree) {
         boolean[][] reachableCells = board.getReachableCells();
         int winningSide = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? 0 : 7;
 

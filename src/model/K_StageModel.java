@@ -2,12 +2,12 @@ package model;
 
 import boardifier.model.*;
 import javafx.stage.Screen;
-import view.KamisadoBoardLook;
+import view.K_BoardLook;
 
 import java.awt.*;
 import java.util.List;
 
-public class KamisadoStageModel extends GameStageModel {
+public class K_StageModel extends GameStageModel {
 
     // states
     public static final int STATE_SELECTPAWN = 1; // the player must select a pawn
@@ -24,7 +24,7 @@ public class KamisadoStageModel extends GameStageModel {
     private TextElement playerName;
     private String lockedColor = null;
 
-    public KamisadoStageModel(String name, Model model) {
+    public K_StageModel(String name, Model model) {
         super(name, model);
 
         setState(STATE_SELECTPAWN);
@@ -35,7 +35,7 @@ public class KamisadoStageModel extends GameStageModel {
 
     @Override
     public StageElementsFactory getDefaultElementFactory() {
-        return new KamisadoStageFactory(this, width, height);
+        return new K_StageFactory(this, width, height);
     }
 
     public TextElement getPlayerName() {
@@ -110,7 +110,7 @@ public class KamisadoStageModel extends GameStageModel {
 
     public boolean playerCanPlay(int idPlayer) {
 
-        Pawn pawn = ((KamisadoStageModel) model.getGameStage()).searchPawnFromLockedColor();
+        Pawn pawn = ((K_StageModel) model.getGameStage()).searchPawnFromLockedColor();
 
         if (idPlayer == 0) {
             for (Pawn p : XPawns) {
@@ -166,7 +166,7 @@ public class KamisadoStageModel extends GameStageModel {
     }
 
 
-    public MinimalBoard[][] createMinimalBoard(HoleBoard board, KamisadoBoardLook boardLook) {
+    public MinimalBoard[][] createMinimalBoard(HoleBoard board, K_BoardLook boardLook) {
         MinimalBoard[][] minimalBoardBase = new MinimalBoard[board.getNbCols()][board.getNbRows()];
         for (int i = 0; i < board.getNbCols(); i++) {
             for (int j = 0; j < board.getNbRows(); j++) {

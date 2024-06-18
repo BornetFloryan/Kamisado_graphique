@@ -7,7 +7,7 @@ import boardifier.control.Logger;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 import model.*;
-import view.KamisadoBoardLook;
+import view.K_BoardLook;
 
 import java.util.*;
 
@@ -31,7 +31,7 @@ public class K_NaiveDecider extends Decider {
     public ActionList decide() {
         Logger.debug("NAIVE AI is deciding");
 
-        KamisadoStageModel stage = (KamisadoStageModel) model.getGameStage();
+        K_StageModel stage = (K_StageModel) model.getGameStage();
         HoleBoard board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
@@ -51,7 +51,7 @@ public class K_NaiveDecider extends Decider {
         Node nodes = tree.getMaxTo();
         int[] to = (nodes.getValue() == 0) ? getRandomMove(board.getReachableCells()) : nodes.getTo();
 
-        KamisadoBoardLook lookBoard = (KamisadoBoardLook) control.getElementLook(board);
+        K_BoardLook lookBoard = (K_BoardLook) control.getElementLook(board);
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 

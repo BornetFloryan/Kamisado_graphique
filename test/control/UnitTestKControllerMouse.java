@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.HoleBoard;
-import model.KamisadoStageModel;
+import model.K_StageModel;
 import org.junit.jupiter.api.BeforeEach;
 import javafx.application.Platform;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class UnitTestKControllerMouse {
     private MouseButton button;
     double x;
     double y;
-    private KamisadoStageModel stageModel;
+    private K_StageModel stageModel;
     private GameElement element;
     private double width;
     private double height;
@@ -92,7 +92,7 @@ public class UnitTestKControllerMouse {
         button = MouseButton.PRIMARY;
         int clickCount = 1;
 
-        stageModel = (KamisadoStageModel) model.getGameStage();
+        stageModel = (K_StageModel) model.getGameStage();
 
         board = stageModel.getBoard();
 

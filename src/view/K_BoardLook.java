@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
-public class KamisadoBoardLook extends ClassicBoardLook {
+public class K_BoardLook extends ClassicBoardLook {
     private final String[][] board_color = {
             {K_Color.ORANGE, K_Color.BLUE, K_Color.PURPLE, K_Color.PINK, K_Color.YELLOW, K_Color.RED, K_Color.GREEN, K_Color.BROWN},
             {K_Color.RED, K_Color.ORANGE, K_Color.PINK, K_Color.GREEN, K_Color.BLUE, K_Color.YELLOW, K_Color.BROWN, K_Color.PURPLE},
@@ -29,7 +29,7 @@ public class KamisadoBoardLook extends ClassicBoardLook {
             {K_Color.BROWN_LOW, K_Color.GREEN_LOW, K_Color.RED_LOW, K_Color.YELLOW_LOW, K_Color.PINK_LOW, K_Color.PURPLE_LOW, K_Color.BLUE_LOW, K_Color.ORANGE_LOW},
     };
 
-    public KamisadoBoardLook(int cellSize, ContainerElement element) {
+    public K_BoardLook(int cellSize, ContainerElement element) {
         super(cellSize, element, -1, null, null, 0, Color.BLACK, 3, Color.BLACK, true);
     }
 
