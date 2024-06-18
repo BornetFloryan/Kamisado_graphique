@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class K_DiagramsPane extends RootPane {
@@ -54,16 +54,11 @@ public class K_DiagramsPane extends RootPane {
         backToHowToPlayButton.setFont(new Font(20));
         GridPane.setHalignment(backToHowToPlayButton, HPos.CENTER);
 
-        images = Arrays.asList(
-                new Image(getClass().getResource("/illustration/illustration-1.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-2.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-3.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-4.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-5.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-6.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-7.png").toString()),
-                new Image(getClass().getResource("/illustration/illustration-8.png").toString())
-        );
+
+        images = new ArrayList<>();
+        for (int i = 1; i <= 8; i++) {
+            images.add(new Image(getClass().getResource("/illustration/illustration-" + i + ".png").toString()));
+        }
 
         imageView = new ImageView(images.get(0));
         imageView.setFitWidth(width * 0.8);
