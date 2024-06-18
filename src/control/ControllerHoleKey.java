@@ -226,7 +226,7 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
             }
             if (event.getCode() == KeyCode.BACK_SPACE) {
                     model.pauseGame();
-                    String message = "";
+                    String message = "Game paused. What do you want to do?";
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.initStyle(StageStyle.UNDECORATED);
                     alert.initOwner(view.getStage());
@@ -239,8 +239,7 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                     if (option.get() == resume) {
                         model.resumeGame();
                     } else if (option.get() == quit) {
-                        model.stopGame();
-                        model.stopStage();
+                        System.exit(0);
 
                     } else {
                         System.err.println("Abnormal case: dialog closed with not choice");
