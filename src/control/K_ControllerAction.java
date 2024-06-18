@@ -2,7 +2,6 @@ package control;
 
 import boardifier.control.Controller;
 import boardifier.control.ControllerAction;
-import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.view.View;
 import javafx.event.ActionEvent;
@@ -10,12 +9,12 @@ import javafx.event.EventHandler;
 
 import view.KamisadoView;
 
-public class ControllerHoleAction extends ControllerAction implements EventHandler<ActionEvent> {
+public class K_ControllerAction extends ControllerAction implements EventHandler<ActionEvent> {
 
     // to avoid lots of casts, create an attribute that matches the instance type.
     private KamisadoView holeView;
 
-    public ControllerHoleAction(Model model, View view, Controller control) {
+    public K_ControllerAction(Model model, View view, Controller control) {
         super(model, view, control);
         // take the view parameter ot define a local view attribute with the real instance type, i.e. BasicView.
         holeView = (KamisadoView) view;

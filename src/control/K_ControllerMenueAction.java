@@ -16,7 +16,7 @@ public class K_ControllerMenueAction extends ControllerAction implements EventHa
     private final Stage stage;
     private KamisadoView view;
 
-    public K_ControllerMenueAction(Model model, View view, KamisadoController control, Stage stage) {
+    public K_ControllerMenueAction(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
         this.view = (KamisadoView) view;
         this.stage = stage;
@@ -33,10 +33,10 @@ public class K_ControllerMenueAction extends ControllerAction implements EventHa
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getStartButton()) {
             view = new KamisadoView(model, stage, new K_GameModePane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerGameModeAction(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerGameModeAction(model, view, (K_Controller) control, stage));
         } else if (event.getSource() == rootPane.getHowToPlayButton()) {
             view = new KamisadoView(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerHowToPlay(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerHowToPlay(model, view, (K_Controller) control, stage));
         } else if (event.getSource() == rootPane.getQuitButton()) {
             System.exit(0);
         }

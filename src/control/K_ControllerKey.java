@@ -34,7 +34,7 @@ import java.util.Stack;
  * A basic keystrokes handler.
  * Generally useless for board games, but it can still be used if needed
  */
-public class ControllerHoleKey extends ControllerKey implements EventHandler<KeyEvent> {
+public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEvent> {
     // Create a stack of key events
     private final Stack<KeyEvent> keyEvents = new Stack<>();
     private KamisadoStageModel stageModel;
@@ -43,7 +43,7 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
     private Stage stage;
 
 
-    public ControllerHoleKey(Model model, View view, Controller control) {
+    public K_ControllerKey(Model model, View view, Controller control) {
         super(model, view, control);
     }
 
@@ -247,7 +247,7 @@ public class ControllerHoleKey extends ControllerKey implements EventHandler<Key
                     Stage K_stage = view.getStage();
 
                     view = new KamisadoView(model, K_stage, new K_GameModePane(root.getWidth(), root.getHeight()));
-                    control.setControlAction(new K_ControllerGameModeAction(model, view, (KamisadoController) control, K_stage));
+                    control.setControlAction(new K_ControllerGameModeAction(model, view, (K_Controller) control, K_stage));
 
 //                        System.exit(0);
 

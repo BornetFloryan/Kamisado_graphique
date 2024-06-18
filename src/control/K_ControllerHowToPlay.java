@@ -15,7 +15,7 @@ public class K_ControllerHowToPlay extends ControllerAction {
     private final view.K_HowToPlayPane rootPane;
     private final Stage stage;
 
-    public K_ControllerHowToPlay(Model model, View view, KamisadoController control, Stage stage) {
+    public K_ControllerHowToPlay(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
         this.view = (KamisadoView) view;
         this.stage = stage;
@@ -32,15 +32,15 @@ public class K_ControllerHowToPlay extends ControllerAction {
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getBackToHomeButton()) {
             view = new KamisadoView(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerMenueAction(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerMenueAction(model, view, (K_Controller) control, stage));
         }
         else if (event.getSource() == rootPane.getGameRulesButton()) {
             view = new KamisadoView(model, stage, new K_GameRulesPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerGamesRules(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerGamesRules(model, view, (K_Controller) control, stage));
         }
         else if (event.getSource() == rootPane.getDiagramsButton()) {
             view = new KamisadoView(model, stage, new K_DiagramsPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerDiagrams(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerDiagrams(model, view, (K_Controller) control, stage));
         }
     }
 }

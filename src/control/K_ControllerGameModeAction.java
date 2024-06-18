@@ -22,7 +22,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
     private final K_GameModePane rootPane;
     private final Stage stage;
 
-    public K_ControllerGameModeAction(Model model, View view, KamisadoController control, Stage stage) {
+    public K_ControllerGameModeAction(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
         this.view = (KamisadoView) view;
         this.stage = stage;
@@ -49,7 +49,7 @@ public class K_ControllerGameModeAction extends ControllerAction implements Even
         }
         else if (event.getSource() == rootPane.getBackToHomeButton()) {
             view = new KamisadoView(model, stage, new K_HomeRootPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerMenueAction(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerMenueAction(model, view, (K_Controller) control, stage));
         }
     }
 

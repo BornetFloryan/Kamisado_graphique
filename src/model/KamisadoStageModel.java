@@ -1,7 +1,6 @@
 package model;
 
 import boardifier.model.*;
-import control.ControllerHoleMouse;
 import javafx.stage.Screen;
 import view.KamisadoBoardLook;
 

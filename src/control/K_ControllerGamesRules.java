@@ -13,7 +13,7 @@ public class K_ControllerGamesRules extends ControllerAction {
     private final view.K_GameRulesPane rootPane;
     private final Stage stage;
 
-    public K_ControllerGamesRules(Model model, View view, KamisadoController control, Stage stage) {
+    public K_ControllerGamesRules(Model model, View view, K_Controller control, Stage stage) {
         super(model, view, control);
         this.view = (KamisadoView) view;
         this.stage = stage;
@@ -28,7 +28,7 @@ public class K_ControllerGamesRules extends ControllerAction {
     public void handle(ActionEvent event) {
         if (event.getSource() == rootPane.getBackToHowToPlayButton()) {
             view = new KamisadoView(model, stage, new K_HowToPlayPane(rootPane.getWidth(), rootPane.getHeight()));
-            control.setControlAction(new K_ControllerHowToPlay(model, view, (KamisadoController) control, stage));
+            control.setControlAction(new K_ControllerHowToPlay(model, view, (K_Controller) control, stage));
         }
     }
 }

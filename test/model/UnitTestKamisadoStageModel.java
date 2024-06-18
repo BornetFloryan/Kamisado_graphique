@@ -8,7 +8,7 @@ import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 import boardifier.view.RootPane;
 import boardifier.view.View;
-import control.KamisadoController;
+import control.K_Controller;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Stage;
@@ -28,7 +28,7 @@ public class UnitTestKamisadoStageModel {
     private View view;
     private Stage stage;
     private RootPane rootPane;
-    private KamisadoController controller;
+    private K_Controller controller;
 
     @BeforeAll
     public static void setupSpec() throws Exception {
@@ -53,7 +53,7 @@ public class UnitTestKamisadoStageModel {
                 view = new View(model, stage, rootPane);
 
                 StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
-                controller = new KamisadoController(model, view);
+                controller = new K_Controller(model, view);
 
                 controller.setFirstStageName("kamisado");
 

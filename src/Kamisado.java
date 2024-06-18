@@ -1,8 +1,7 @@
-import boardifier.control.Logger;
 import boardifier.control.StageFactory;
 import boardifier.model.Model;
 import control.K_ControllerMenueAction;
-import control.KamisadoController;
+import control.K_Controller;
 import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -34,7 +33,7 @@ public class Kamisado extends Application {
         KamisadoView view = new KamisadoView(model, stage, homeRootPane);
 
         // create the controllers.
-        KamisadoController control = new KamisadoController(model, view);
+        K_Controller control = new K_Controller(model, view);
         control.setControlAction(new K_ControllerMenueAction(model, view, control, stage));
 
         // set the name of the first stage to create when the game is started

@@ -4,18 +4,17 @@ import boardifier.control.*;
 import boardifier.model.GameException;
 import boardifier.model.Model;
 import boardifier.model.Player;
-import boardifier.model.action.ActionList;
 import boardifier.view.View;
 import model.AISelector;
 import model.KamisadoStageModel;
 
-public class KamisadoController extends Controller {
+public class K_Controller extends Controller {
     private Thread play;
 
-    public KamisadoController(Model model, View view) {
+    public K_Controller(Model model, View view) {
         super(model, view);
-        setControlKey(new ControllerHoleKey(model, view, this));
-        setControlMouse(new ControllerHoleMouse(model, view, this));
+        setControlKey(new K_ControllerKey(model, view, this));
+        setControlMouse(new K_ControllerMouse(model, view, this));
     }
 
     @Override
@@ -60,7 +59,7 @@ public class KamisadoController extends Controller {
         } else {
             Logger.debug("PLAYER PLAYS");
 
-            ControllerHoleMouse mouse = ((ControllerHoleMouse) controlMouse);
+            K_ControllerMouse mouse = ((K_ControllerMouse) controlMouse);
             mouse.setPawnFromLockedColor((KamisadoStageModel) model.getGameStage(), ((KamisadoStageModel) model.getGameStage()).getBoard(), model.getCurrentPlayer());
         }
     }

@@ -2,8 +2,8 @@ package model;
 
 import boardifier.model.Model;
 import boardifier.model.TextElement;
-import control.ControllerHoleMouse;
-import control.KamisadoController;
+import control.K_ControllerMouse;
+import control.K_Controller;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.stage.Screen;
@@ -23,8 +23,8 @@ public class UnitTestKamisadoStageFactory {
     private KamisadoStageModel stageModel;
     private KamisadoStageFactory stageFactory;
     private HoleBoard board;
-    private KamisadoController controller;
-    private ControllerHoleMouse controllerHoleMouse;
+    private K_Controller controller;
+    private K_ControllerMouse KControllerMouse;
     private TextElement text;
     private double width;
     private double height;

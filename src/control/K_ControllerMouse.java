@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * A mouse controller that handles mouse clicks, selects pawns, and moves them.
  */
-public class ControllerHoleMouse extends ControllerMouse implements EventHandler<MouseEvent> {
+public class K_ControllerMouse extends ControllerMouse implements EventHandler<MouseEvent> {
     private Pawn selectedPawn = null;
 
-    public ControllerHoleMouse(Model model, View view, Controller control) {
+    public K_ControllerMouse(Model model, View view, Controller control) {
         super(model, view, control);
     }
 
