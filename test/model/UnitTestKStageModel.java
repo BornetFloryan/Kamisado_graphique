@@ -81,7 +81,7 @@ public class UnitTestKStageModel {
     @Test
     void testIsWinPlayerX(){
         K_StageModel stageModel = (K_StageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
+        K_Board board = stageModel.getBoard();
 
         List<String> actions = new ArrayList<>();
         actions.add("D3");
@@ -137,7 +137,7 @@ public class UnitTestKStageModel {
     @Test
     void testIsWinPlayerO(){
         K_StageModel stageModel = (K_StageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
+        K_Board board = stageModel.getBoard();
 
         List<String> actions = new ArrayList<>();
         actions.add("D5");

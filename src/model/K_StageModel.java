@@ -18,7 +18,7 @@ public class K_StageModel extends GameStageModel {
     private final double height;
 
     // stage elements
-    private HoleBoard board;
+    private K_Board board;
     private Pawn[] XPawns;
     private Pawn[] OPawns;
     private TextElement playerName;
@@ -68,11 +68,11 @@ public class K_StageModel extends GameStageModel {
         }
     }
 
-    public HoleBoard getBoard() {
+    public K_Board getBoard() {
         return board;
     }
 
-    public void setBoard(HoleBoard board) {
+    public void setBoard(K_Board board) {
         this.board = board;
     }
 
@@ -164,7 +164,7 @@ public class K_StageModel extends GameStageModel {
     }
 
 
-    public MinimalBoard[][] createMinimalBoard(HoleBoard board, K_BoardLook boardLook) {
+    public MinimalBoard[][] createMinimalBoard(K_Board board, K_BoardLook boardLook) {
         MinimalBoard[][] minimalBoardBase = new MinimalBoard[board.getNbCols()][board.getNbRows()];
         for (int i = 0; i < board.getNbCols(); i++) {
             for (int j = 0; j < board.getNbRows(); j++) {

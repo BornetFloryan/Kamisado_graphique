@@ -31,7 +31,7 @@ public class K_SmartDecider extends Decider {
         Logger.debug("Smart AI is deciding");
 
         K_StageModel stage = (K_StageModel) model.getGameStage();
-        HoleBoard board = stage.getBoard();
+        K_Board board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
 
@@ -110,7 +110,7 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setLoosingMove(K_StageModel stage, HoleBoard board, int fromX, int fromY, Tree tree) {
+    private void setLoosingMove(K_StageModel stage, K_Board board, int fromX, int fromY, Tree tree) {
         K_BoardLook lookBoard = (K_BoardLook) control.getElementLook(board);
         MinimalBoard[][] minimalBoardBase = stage.createMinimalBoard(board, lookBoard);
         List<Integer[]> validMoveCurrentPlayer = getValidCurrentPlayerMove(board);
@@ -141,7 +141,7 @@ public class K_SmartDecider extends Decider {
         }
     }
 
-    private void setWiningMove(K_StageModel stage, HoleBoard board, Tree tree) {
+    private void setWiningMove(K_StageModel stage, K_Board board, Tree tree) {
         boolean[][] reachableCells = board.getReachableCells();
         int winningSide = stage.getCurrentPlayerName().equals(model.getPlayers().get(0).getName()) ? 0 : 7;
 
@@ -195,7 +195,7 @@ public class K_SmartDecider extends Decider {
         return null;
     }
 
-    private List<Integer[]> getValidCurrentPlayerMove(HoleBoard board) {
+    private List<Integer[]> getValidCurrentPlayerMove(K_Board board) {
         boolean[][] reachableCells = board.getReachableCells();
         List<Integer[]> validMoveCurrentPlayer = new ArrayList<>();
         for (int i = 0; i < board.getNbCols(); i++) {

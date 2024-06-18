@@ -8,9 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoleBoard extends ContainerElement {
+public class K_Board extends ContainerElement {
 
-    public HoleBoard(int x, int y, GameStageModel gameStageModel) {
+    public K_Board(int x, int y, GameStageModel gameStageModel) {
         // Call the super-constructor to create an 8x8 grid, named "holeboard", at coordinates (x, y) in space
         super("holeboard", x, y, 8, 8, gameStageModel);
 

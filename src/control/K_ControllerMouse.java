@@ -6,7 +6,7 @@ import boardifier.model.action.ActionList;
 import boardifier.view.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import model.HoleBoard;
+import model.K_Board;
 import model.K_StageModel;
 import model.Pawn;
 import view.K_BoardLook;
@@ -31,7 +31,7 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
         List<GameElement> clickedElements = control.elementsAt(clickPosition);
 
         K_StageModel stageModel = (K_StageModel) model.getGameStage();
-        HoleBoard board = stageModel.getBoard();
+        K_Board board = stageModel.getBoard();
 
         Logger.debug("Game state: " + stageModel.getState()); // Debug game state
 
@@ -44,7 +44,7 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
         }
     }
 
-    private void handleSelectPawnState(List<GameElement> clickedElements, HoleBoard board, K_StageModel stageModel) {
+    private void handleSelectPawnState(List<GameElement> clickedElements, K_Board board, K_StageModel stageModel) {
         for (GameElement element : clickedElements) {
             if (element.getType() == ElementTypes.getType("pawn")) {
                 if (selectedPawn != null) {
@@ -60,7 +60,7 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
         }
     }
 
-    public void handleSelectDestState(List<GameElement> clickedElements, HoleBoard board, K_StageModel stageModel, Coord2D clickPosition) {
+    public void handleSelectDestState(List<GameElement> clickedElements, K_Board board, K_StageModel stageModel, Coord2D clickPosition) {
         for (GameElement element : clickedElements) {
             if (element.isSelected() && stageModel.getLockedColor() == null) {
                 resetSelection(board);
@@ -88,7 +88,7 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
         }
     }
 
-    private void resetSelection(HoleBoard board) {
+    private void resetSelection(K_Board board) {
         if (selectedPawn != null) {
             selectedPawn.toggleSelected(); // Unselect the pawn
             selectedPawn = null;
@@ -96,7 +96,7 @@ public class K_ControllerMouse extends ControllerMouse implements EventHandler<M
         board.resetReachableCells(false);
     }
 
-    public void setPawnFromLockedColor(K_StageModel stageModel, HoleBoard board, Player player) {
+    public void setPawnFromLockedColor(K_StageModel stageModel, K_Board board, Player player) {
         Logger.debug("Setting pawn from locked color: " + stageModel.getLockedColor()); // Debug locked color
 
         if (stageModel.getLockedColor() == null) return;

@@ -32,7 +32,7 @@ public class K_NaiveDecider extends Decider {
         Logger.debug("NAIVE AI is deciding");
 
         K_StageModel stage = (K_StageModel) model.getGameStage();
-        HoleBoard board = stage.getBoard();
+        K_Board board = stage.getBoard();
         Tree tree = new Tree();
         Pawn pawn;
 

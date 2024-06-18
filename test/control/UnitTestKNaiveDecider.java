@@ -3,7 +3,7 @@ package control;
 import boardifier.control.Controller;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
-import model.HoleBoard;
+import model.K_Board;
 import model.K_StageModel;
 import model.Pawn;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class UnitTestKNaiveDecider {
         Model model = mock(Model.class);
         Controller controller = mock(Controller.class);
         K_StageModel stage = mock(K_StageModel.class);
-        HoleBoard board = mock(HoleBoard.class);
+        K_Board board = mock(K_Board.class);
         Pawn pawn = mock(Pawn.class);
         K_BoardLook lookBoard = mock(K_BoardLook.class);
 

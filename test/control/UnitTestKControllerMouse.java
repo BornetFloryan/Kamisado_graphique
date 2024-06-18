@@ -10,7 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.HoleBoard;
+import model.K_Board;
 import model.K_StageModel;
 import org.junit.jupiter.api.BeforeEach;
 import javafx.application.Platform;
@@ -25,7 +25,7 @@ public class UnitTestKControllerMouse {
     private View view;
     private K_Controller controller;
     private K_ControllerMouse KcontrollerMouse;
-    private HoleBoard board;
+    private K_Board board;
     private MouseEvent event;
     private MouseButton button;
     double x;

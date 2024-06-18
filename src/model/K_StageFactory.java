@@ -31,7 +31,7 @@ public class K_StageFactory extends StageElementsFactory {
         text.setLocation(boardX + 50, boardY + 100);
         stageModel.setPlayerName(text);
 
-        HoleBoard board = new HoleBoard((int) boardY, (int) boardX, stageModel);
+        K_Board board = new K_Board((int) boardY, (int) boardX, stageModel);
         stageModel.setBoard(board);
         stageModel.addElement(board);
 

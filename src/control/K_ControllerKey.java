@@ -17,7 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.HoleBoard;
+import model.K_Board;
 import model.K_StageModel;
 import model.Pawn;
 import view.K_GameModePane;
@@ -38,7 +38,7 @@ public class K_ControllerKey extends ControllerKey implements EventHandler<KeyEv
     // Create a stack of key events
     private final Stack<KeyEvent> keyEvents = new Stack<>();
     private K_StageModel stageModel;
-    private HoleBoard board;
+    private K_Board board;
     private K_HomeRootPane rootPane;
     private Stage stage;
 
