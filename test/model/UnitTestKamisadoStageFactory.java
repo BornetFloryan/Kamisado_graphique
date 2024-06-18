@@ -23,15 +23,13 @@ public class UnitTestKamisadoStageFactory {
     private KamisadoStageModel stageModel;
     private KamisadoStageFactory stageFactory;
     private HoleBoard board;
-    private K_Controller controller;
-    private K_ControllerMouse KControllerMouse;
     private TextElement text;
     private double width;
     private double height;
-    private double boardWidth;
-    private double boardHeight;
     private double boardX;
     private double boardY;
+    private double boardWidth;
+    private double boardHeight;
 
 
     @BeforeEach
@@ -47,6 +45,7 @@ public class UnitTestKamisadoStageFactory {
 
                 boardWidth = width * 0.8;
                 boardHeight = height * 0.9;
+
                 boardX = (width - boardWidth) / 2;
                 boardY = (height - boardHeight) / 2;
 

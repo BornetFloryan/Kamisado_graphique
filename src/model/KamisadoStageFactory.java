@@ -9,6 +9,10 @@ public class KamisadoStageFactory extends StageElementsFactory {
     private final String[] defaultXpawnsColor = {K_Color.BROWN, K_Color.GREEN, K_Color.RED, K_Color.YELLOW, K_Color.PINK, K_Color.PURPLE, K_Color.BLUE, K_Color.ORANGE};
     private final String[] defaultOpawnsColor = {K_Color.ORANGE, K_Color.BLUE, K_Color.PURPLE, K_Color.PINK, K_Color.YELLOW, K_Color.RED, K_Color.GREEN, K_Color.BROWN};
     private final KamisadoStageModel stageModel;
+    private double boardWidth;
+    private double boardHeight;
+    private double boardX;
+    private double boardY;
     private final double width;
     private final double height;
 
@@ -22,11 +26,14 @@ public class KamisadoStageFactory extends StageElementsFactory {
     @Override
     public void setup() {
         // Center the board from the screen (the board is 8x8);
-        double boardX = (width - 8 * 70) / 2;
-        double boardY = (height - 8 * 70) / 2;
+        boardWidth = width * 0.8;
+        boardHeight = height * 0.9;
+
+        boardX = (width - boardWidth) / 2;
+        boardY = (height - boardHeight) / 2;
 
         TextElement text = new TextElement(stageModel.getCurrentPlayerName(), stageModel);
-        text.setLocation(boardX + 50, boardY - 50);
+        text.setLocation(boardX + 50, boardY + 100);
         stageModel.setPlayerName(text);
 
         HoleBoard board = new HoleBoard((int) boardX, (int) boardY, stageModel);
