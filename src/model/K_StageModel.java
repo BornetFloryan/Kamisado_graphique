@@ -23,6 +23,7 @@ public class K_StageModel extends GameStageModel {
     private Pawn[] OPawns;
     private TextElement playerName;
     private String lockedColor = null;
+    private Pawn previousPawn;
 
     public K_StageModel(String name, Model model) {
         super(name, model);
@@ -82,6 +83,14 @@ public class K_StageModel extends GameStageModel {
 
     public void setLockedColor(String color) {
         lockedColor = color;
+    }
+
+    public Pawn getPreviousPawn() {
+        return previousPawn;
+    }
+
+    public void setPreviousPawn(Pawn pawn) {
+        previousPawn = pawn;
     }
 
     public boolean isWin() {

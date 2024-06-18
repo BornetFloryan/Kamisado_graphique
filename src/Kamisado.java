@@ -24,7 +24,7 @@ public class Kamisado extends Application {
         Model model = new Model();
 
         // register a single stage for the game, called hole
-        StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
+        StageFactory.registerModelAndView("kamisado", "model.K_StageModel", "view.K_StageView");
 
         // create the root pane, using the subclass HoleRootPane
         K_HomeRootPane homeRootPane = new K_HomeRootPane(width, height);

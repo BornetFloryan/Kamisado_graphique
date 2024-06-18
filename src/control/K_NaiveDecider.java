@@ -55,6 +55,8 @@ public class K_NaiveDecider extends Decider {
         String color = lookBoard.getColor(to[0], to[1]);
         stage.setLockedColor(color);
 
+        stage.setPreviousPawn(pawn);
+
         ActionList action = ActionFactory.generateMoveWithinContainer(control, model, pawn, to[0], to[1]);
         action.setDoEndOfTurn(true);
 
