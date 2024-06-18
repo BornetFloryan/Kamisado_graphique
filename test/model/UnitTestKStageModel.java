@@ -52,7 +52,7 @@ public class UnitTestKStageModel {
                 rootPane = new RootPane();
                 view = new View(model, stage, rootPane);
 
-                StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
+                StageFactory.registerModelAndView("kamisado", "model.K_StageModel", "view.K_StageView");
                 controller = new K_Controller(model, view);
 
                 controller.setFirstStageName("kamisado");

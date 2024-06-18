@@ -4,10 +4,10 @@ import boardifier.control.Controller;
 import boardifier.model.Model;
 import boardifier.model.action.ActionList;
 import model.HoleBoard;
-import model.KamisadoStageModel;
+import model.K_StageModel;
 import model.Pawn;
 import org.junit.jupiter.api.Test;
-import view.KamisadoBoardLook;
+import view.K_BoardLook;
 
 import java.util.Arrays;
 
@@ -21,10 +21,10 @@ public class UnitTestKNaiveDecider {
         // Create mock objects
         Model model = mock(Model.class);
         Controller controller = mock(Controller.class);
-        KamisadoStageModel stage = mock(KamisadoStageModel.class);
+        K_StageModel stage = mock(K_StageModel.class);
         HoleBoard board = mock(HoleBoard.class);
         Pawn pawn = mock(Pawn.class);
-        KamisadoBoardLook lookBoard = mock(KamisadoBoardLook.class);
+        K_BoardLook lookBoard = mock(K_BoardLook.class);
 
         // Define behavior of mock objects
         when(model.getGameStage()).thenReturn(stage);

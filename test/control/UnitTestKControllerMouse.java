@@ -65,7 +65,7 @@ public class UnitTestKControllerMouse {
                 model.addHumanPlayer("Player X");
                 model.addHumanPlayer("Player O");
 
-                StageFactory.registerModelAndView("kamisado", "model.KamisadoStageModel", "view.KamisadoStageView");
+                StageFactory.registerModelAndView("kamisado", "model.K_StageModel", "view.K_StageView");
                 controller = new K_Controller(model, view);
                 KcontrollerMouse = new K_ControllerMouse(model, view, controller);
 
